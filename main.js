@@ -36,28 +36,36 @@ for(i=0; i<topRowEls.length; i++) {
 function dropPiece() {
   let clickedEl = event.target;
   let columnToDropIn = gameColumns[clickedEl.getAttribute("column")];
+  let gameBoardFull = false;
   if(columnToDropIn[5].classList[2] !== "white") { // check if column is full
     return;
   }
-  for(let i=0; i<columnToDropIn.length; i++) {
+  for(let i=0; i<columnToDropIn.length; i++) { //look for white spaces to drop token
     if(columnToDropIn[i].classList[2] === "white") {
       columnToDropIn[i].classList.remove("white");
       columnToDropIn[i].classList.add(currentPlayer.color);
       currentPieceX = parseInt(columnToDropIn[i].getAttribute("column") , 10);
       currentPieceY = parseInt(columnToDropIn[i].getAttribute("row"), 10);
       console.log(currentPlayer.name, "dropped a" , currentPlayer.color, "token at", currentPieceX, currentPieceY);
-      break;
+      if (currentPieceY === 5){
+        gameBoardFull = isBoardFull();
+        console.log("gameBoardFull:", gameBoardFull);
+      }
+      break; //stop looking for places to drop token
     }
   }
   if(!checkWin()){
-    console.log("You suuuuuuck. Git gud scrub. YEET");
-    if (currentPlayer === firstPlayer) {
+    console.log("Win check returned false");
+    if(gameBoardFull) {
+      endGame(false);
+    } else if (currentPlayer === firstPlayer) {
       currentPlayer = secondPlayer;
     } else {
       currentPlayer = firstPlayer;
     }
   } else {
     console.log(`${currentPlayer.name} WINS!`);
+    endGame(true);
   }
 }
 
@@ -177,6 +185,30 @@ function checkWin() {
   }
 }
 
+function isBoardFull() {
+  for (let i = 0; i < topRowEls.length; i++) {
+    if (topRowEls[i].classList[2] === "white") { //if one top row element is white, game is not full yet
+      return false;
+    }
+  }
+  return true;
+}
+
+//displays win modal and modifies the text based upon whether the win condition was met
+function endGame(winCondition) {
+  let winModal = document.getElementById("win-modal");
+  let modalMessage = document.getElementById("message").setAttribute('style', 'white-space: pre;');
+  if(winCondition) {
+    modalMessage.innerText = "Woofa woofa woof woof!" +"\r\n"+ "You win!";
+  } else {
+    let winModal = document.getElementById("win-modal");
+    modalMessage.innerText("Bork!" +"\r\n"+ "You tied!");
+  }
+  winModal.classList.remove("hidden");
+  for (let i = 0; i < topRowEls.length; i++) {
+    topRowEls[i].removeEventListener("click", dropPiece);
+  }
+
 // If checkWin evaluates to true, do the endGame functionality
 /* if (checkWin) {
   endGame();
@@ -190,5 +222,5 @@ function resetBoard() {
       gameColumns[tiles][inside].classList.add("white");
     }
   }
-  document.getElementById("win-modal").classList.add("hidden")
+  document.getElementById("win-modal").classList.add("hidden");
 }
