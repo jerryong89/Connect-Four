@@ -51,8 +51,13 @@ function dropPiece() {
   }
   if(!checkWin()){
     console.log("You suuuuuuck. Git gud scrub. YEET");
+    if (currentPlayer === firstPlayer) {
+      currentPlayer = secondPlayer;
+    } else {
+      currentPlayer = firstPlayer;
+    }
   } else {
-    console.log("You WIN!");
+    console.log(`${currentPlayer.name} WINS!`);
   }
 }
 
