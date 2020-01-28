@@ -137,4 +137,76 @@ background-repeat: no-repeat;
 body{
   display: flex;
   justify-content: center;
+  width: 100%;
+  height: 95vh;
+  overflow: hidden;
+  margin: 0;
+}
+
+#win-modal {
+  width: 100%;
+  height: 100vh;
+  background-image: url(images/puppy-ultimate-form.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #F8F8F8;
+  position: fixed;
+  overflow: hidden;
+}
+
+#modal-content {
+  display: flex;
+  justify-content: center;
+}
+
+#message {
+  width: 300px;
+  padding: 20px;
+  color: black;
+  font-size: 2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+  top: 50px;
+  font-size: 4rem;
+}
+
+#button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 40%;
+}
+
+button {
+  width: 250px;
+  padding: 20px;
+  background-color: black;
+  border: white;
+  color: white;
+  font-size: 2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 15px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+@keyframes glowing {
+  0% { box-shadow: 0 0 -10px 7px red; }
+  40% { box-shadow: 0 0 20px 7px red; }
+  60% { box-shadow: 0 0 20px 7px red; }
+  100% { box-shadow: 0 0 -10px 7px red; }
+}
+
+.button-glow {
+  animation: glowing 3000ms infinite;
+}
+
+.hidden {
+  display: none;
 }
