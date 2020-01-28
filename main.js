@@ -27,10 +27,24 @@ let currentPlayer = firstPlayer;
 let topRowEls = document.getElementsByClassName("row-5"); // create list of top row of elements
 for(i=0; i<topRowEls.length; i++) {
   topRowEls[i].addEventListener("click", dropPiece); //add a listener to each slot in the top row
+  topRowEls[i].addEventListener("mouseenter", mouseenterColumn); //adds column selector glow
+  topRowEls[i].addEventListener("mouseleave", mouseleaveColumn); //removes column selector glow
 }
 document.getElementById("reset-btn").addEventListener("click", resetBoard);
 
+
+
 // End variable declarations ______________________________________________________
+
+// Select column styling ______________________________________________________
+function mouseenterColumn(event) {
+  event.target.parentElement.classList.add("column-glow");
+}
+function mouseleaveColumn(event) {
+  event.target.parentElement.classList.remove("column-glow");
+}
+// End select column styling ______________________________________________________
+
 
 // Drop piece functionality ______________________________________________________
 
