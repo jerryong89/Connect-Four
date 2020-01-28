@@ -28,6 +28,7 @@ let topRowEls = document.getElementsByClassName("row-5"); // create list of top 
 for(i=0; i<topRowEls.length; i++) {
   topRowEls[i].addEventListener("click", dropPiece); //add a listener to each slot in the top row
 }
+document.getElementById("reset-btn").addEventListener("click", resetBoard);
 
 // End variable declarations ______________________________________________________
 
@@ -197,22 +198,15 @@ function isBoardFull() {
 //displays win modal and modifies the text based upon whether the win condition was met
 function endGame(winCondition) {
   let winModal = document.getElementById("win-modal");
-  let modalMessage = document.getElementById("message").setAttribute('style', 'white-space: pre;');
+  let modalMessage = document.getElementById("message");
+  modalMessage.setAttribute('style', 'white-space: pre;'); //allows use of carriage return \r\n
   if(winCondition) {
-    modalMessage.innerText = "Woofa woofa woof woof!" +"\r\n"+ "You win!";
+    modalMessage.innerText = "Woofa woof!" +"\r\n"+ currentPlayer.name + " wins!";
   } else {
-    let winModal = document.getElementById("win-modal");
-    modalMessage.innerText("Bork!" +"\r\n"+ "You tied!");
+    modalMessage.innerText = "Bork!" +"\r\n"+ "You tied!";
   }
   winModal.classList.remove("hidden");
-  for (let i = 0; i < topRowEls.length; i++) {
-    topRowEls[i].removeEventListener("click", dropPiece);
-  }
-
-// If checkWin evaluates to true, do the endGame functionality
-/* if (checkWin) {
-  endGame();
-} */
+}
 
 function resetBoard() {
   for (var tiles = 0; tiles < gameColumns.length; tiles++) {
@@ -222,5 +216,6 @@ function resetBoard() {
       gameColumns[tiles][inside].classList.add("white");
     }
   }
+  currentPlayer = firstPlayer;
   document.getElementById("win-modal").classList.add("hidden");
 }
