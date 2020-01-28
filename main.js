@@ -6,7 +6,6 @@ for(let i=0; i<7; i++) {
     gameColumns[i][k].setAttribute("id", i +"-"+ k);
     gameColumns[i][k].setAttribute("column", i);
     gameColumns[i][k].setAttribute("row", k);
-    gameColumns[i][k].setAttribute("color", "blank");  //create IDs dynamically
   }
 }
 
@@ -16,10 +15,12 @@ let currentPieceX;
 let currentPieceY;
 
 let firstPlayer = {
+  name: "Player 1",
   color: "red"
 };
 let secondPlayer = {
-  color: "blue"
+  name: "Player 2",
+  color: "black"
 };
 let currentPlayer = firstPlayer;
 
@@ -35,13 +36,23 @@ for(i=0; i<topRowEls.length; i++) {
 function dropPiece() {
   let clickedEl = event.target;
   let columnToDropIn = gameColumns[clickedEl.getAttribute("column")];
+  if(columnToDropIn[5].classList[2] !== "white") { // check if column is full
+    return;
+  }
   for(let i=0; i<columnToDropIn.length; i++) {
-    if(columnToDropIn[i].getAttribute("color") === "blank") {
+    if(columnToDropIn[i].classList[2] === "white") {
+      columnToDropIn[i].classList.remove("white");
       columnToDropIn[i].classList.add(currentPlayer.color);
-      console.log("Current player dropped a token:", currentPlayer.color);
+      currentPieceX = parseInt(columnToDropIn[i].getAttribute("column") , 10);
+      currentPieceY = parseInt(columnToDropIn[i].getAttribute("row"), 10);
+      console.log(currentPlayer.name, "dropped a" , currentPlayer.color, "token at", currentPieceX, currentPieceY);
       break;
     }
   }
+  if(!checkWin()){
+    console.log("You suuuuuuck. Git gud scrub. YEET");
+  }
+
 }
 
 // End drop piece functionality ______________________________________________________
@@ -54,8 +65,8 @@ let directionsArray = [checkNE, checkE, checkSE, checkS, checkSW, checkW, checkN
 
 function checkNE() {
   let i;
-  for (i = 1; i < 4, i++) {
-    let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i];
+  for (i = 1; i < 4; i++) {
+    let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i]; // ***Need to make sure we do not refer to an invalid array index***
     if (currentPiece === undefined) {
       break;
     } else if (currentPiece.style.color !== currentPlayer.color) {
@@ -67,8 +78,21 @@ function checkNE() {
 
 function checkE() {
   let i;
-  for (i = 1; i < 4, i++) {
+  for (i = 1; i < 4; i++) {
     let currentPiece = gameColumns[currentPieceX + i][currentPieceY];
+    if (currentPiece === undefined) {
+      break;
+    } else if (currentPiece.style.color !== currentPlayer.color) {
+      break;
+    }
+  }
+  return i === 4;
+}
+
+function checkSE() {
+  let i;
+  for (i = 1; i < 4; i++) {
+    let currentPiece = gameColumns[currentPieceX + i][currentPieceY - i];
     if (currentPiece === undefined) {
       break;
     } else if (currentPiece.style.color !== currentPlayer.color) {
@@ -80,7 +104,7 @@ function checkE() {
 
 function checkS() {
   let i;
-  for (i = 1; i < 4, i++) {
+  for (i = 1; i < 4; i++) {
     let currentPiece = gameColumns[currentPieceX][currentPieceY - i];
     if (currentPiece === undefined) {
       break;
@@ -93,7 +117,7 @@ function checkS() {
 
 function checkSW() {
   let i;
-  for (i = 1; i < 4, i++) {
+  for (i = 1; i < 4; i++) {
     let currentPiece = gameColumns[currentPieceX - i][currentPieceY - i];
     if (currentPiece === undefined) {
       break;
@@ -106,7 +130,7 @@ function checkSW() {
 
 function checkW() {
   let i;
-  for (i = 1; i < 4, i++) {
+  for (i = 1; i < 4; i++) {
     let currentPiece = gameColumns[currentPieceX - i][currentPieceY];
     if (currentPiece === undefined) {
       break;
@@ -119,7 +143,7 @@ function checkW() {
 
 function checkNW() {
   let i;
-  for (i = 1; i < 4, i++) {
+  for (i = 1; i < 4; i++) {
     let currentPiece = gameColumns[currentPieceX - i][currentPieceY + i];
     if (currentPiece === undefined) {
       break;
@@ -141,6 +165,6 @@ function checkWin(){
 }
 
 // If checkWin evaluates to true, do the endGame functionality
-if (checkWin) {
+/* if (checkWin) {
   endGame();
-}
+} */
