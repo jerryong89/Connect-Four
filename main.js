@@ -181,3 +181,14 @@ function checkWin() {
 /* if (checkWin) {
   endGame();
 } */
+
+function resetBoard() {
+  for (var tiles = 0; tiles < gameColumns.length; tiles++) {
+    for (var inside = 0; inside < gameColumns[tiles].length; inside++) {
+      gameColumns[tiles][inside].classList.remove("red");
+      gameColumns[tiles][inside].classList.remove("black");
+      gameColumns[tiles][inside].classList.add("white");
+    }
+  }
+  document.getElementById("win-modal").classList.add("hidden")
+}
