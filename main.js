@@ -51,8 +51,9 @@ function dropPiece() {
   }
   if(!checkWin()){
     console.log("You suuuuuuck. Git gud scrub. YEET");
+  } else {
+    console.log("You WIN!");
   }
-
 }
 
 // End drop piece functionality ______________________________________________________
@@ -66,101 +67,108 @@ let directionsArray = [checkNE, checkE, checkSE, checkS, checkSW, checkW, checkN
 function checkNE() {
   let i;
   for (i = 1; i < 4; i++) {
-    let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i]; // ***Need to make sure we do not refer to an invalid array index***
-    if (currentPiece === undefined) {
+    if (currentPieceX + i < 0 || currentPieceX + i > 6 || currentPieceY + i < 0 || currentPieceY + i > 5) {
       break;
-    } else if (currentPiece.style.color !== currentPlayer.color) {
+    }
+    let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i]; // ***Need to make sure we do not refer to an invalid array index***
+    if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
   }
-  return i === 4;
+  return i - 1;
 }
 
 function checkE() {
   let i;
   for (i = 1; i < 4; i++) {
-    let currentPiece = gameColumns[currentPieceX + i][currentPieceY];
-    if (currentPiece === undefined) {
+    if (currentPieceX + i < 0 || currentPieceX + i > 6) {
       break;
-    } else if (currentPiece.style.color !== currentPlayer.color) {
+    }
+    let currentPiece = gameColumns[currentPieceX + i][currentPieceY];
+    if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
   }
-  return i === 4;
+  return i - 1;
 }
 
 function checkSE() {
   let i;
   for (i = 1; i < 4; i++) {
-    let currentPiece = gameColumns[currentPieceX + i][currentPieceY - i];
-    if (currentPiece === undefined) {
+    if (currentPieceX + i < 0 || currentPieceX + i > 6 || currentPieceY - i < 0 || currentPieceY - i > 5) {
       break;
-    } else if (currentPiece.style.color !== currentPlayer.color) {
+    }
+    let currentPiece = gameColumns[currentPieceX + i][currentPieceY - i];
+    if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
   }
-  return i === 4;
+  return i - 1;
 }
 
 function checkS() {
   let i;
   for (i = 1; i < 4; i++) {
-    let currentPiece = gameColumns[currentPieceX][currentPieceY - i];
-    if (currentPiece === undefined) {
+    if (currentPieceY - i < 0 || currentPieceY - i > 5) {
       break;
-    } else if (currentPiece.style.color !== currentPlayer.color) {
+    }
+    let currentPiece = gameColumns[currentPieceX][currentPieceY - i];
+    if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
   }
-  return i === 4;
+  return i - 1;
 }
 
 function checkSW() {
   let i;
   for (i = 1; i < 4; i++) {
-    let currentPiece = gameColumns[currentPieceX - i][currentPieceY - i];
-    if (currentPiece === undefined) {
+    if (currentPieceX - i < 0 || currentPieceX - i > 6 || currentPieceY - i < 0 || currentPieceY - i > 5) {
       break;
-    } else if (currentPiece.style.color !== currentPlayer.color) {
+    }
+    let currentPiece = gameColumns[currentPieceX - i][currentPieceY - i];
+    if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
   }
-  return i === 4;
+  return i - 1;
 }
 
 function checkW() {
   let i;
   for (i = 1; i < 4; i++) {
-    let currentPiece = gameColumns[currentPieceX - i][currentPieceY];
-    if (currentPiece === undefined) {
+    if (currentPieceX - i < 0 || currentPieceX - i > 6) {
       break;
-    } else if (currentPiece.style.color !== currentPlayer.color) {
+    }
+    let currentPiece = gameColumns[currentPieceX - i][currentPieceY];
+    if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
   }
-  return i === 4;
+  return i - 1;
 }
 
 function checkNW() {
   let i;
   for (i = 1; i < 4; i++) {
+    if (currentPieceX - i < 0 || currentPieceX - i > 6 || currentPieceY + i < 0 || currentPieceY + i > 5) {
+      break;
+    }
     let currentPiece = gameColumns[currentPieceX - i][currentPieceY + i];
     if (currentPiece === undefined) {
       break;
-    } else if (currentPiece.style.color !== currentPlayer.color) {
+    } else if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
   }
-  return i === 4;
+  return i - 1;
 }
 
 // Function that runs all the checks in each direction and returns true at the first instance of a winning case
-function checkWin(){
-  for (let i = 0; i < directionsArray.length; i++) {
-    if (directionsArray[i]()) {
-      return true; // And call an end game function?
-      // endGame();
-    }
+function checkWin() {
+  if (checkS() + 1 >= 4 || checkNW() + checkSE() + 1 >=4 || checkNE() + checkSW() + 1 >= 4 || checkW() + checkE() + 1 >= 4) {
+    console.log("You got it");
+    return true;
   }
 }
 
