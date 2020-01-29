@@ -231,3 +231,93 @@ button:hover {
 #config-modal.hidden {
   display: none;
 }
+
+.dogContainer{
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+}
+
+.dogbeagle{
+  background-image: url(images/dogbeagle.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogbichon{
+  background-image: url(images/dogbichon.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogchihuahua{
+  background-image: url(images/dogchihuahua.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogfrench{
+  background-image: url(images/dogfrench.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.doggolden{
+  background-image: url(images/doggolden.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogmaltese{
+  background-image: url(images/dogmaltese.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogpomeranian{
+  background-image: url(images/dogpomeranian.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogpoodle{
+  background-image: url(images/dogpoodle.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogpug{
+  background-image: url(images/dogpug.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogshibainu{
+  background-image: url(images/dogshibainu.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogshihtzu{
+  background-image: url(images/dogshihtzu.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.dogsnhauzer{
+  background-image: url(images/dogsnhauzer.png);
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+}

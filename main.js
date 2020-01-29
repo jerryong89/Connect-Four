@@ -304,3 +304,13 @@ function resetBoard() {
   configModalEl.classList.remove("hidden");
   document.getElementById("win-modal").classList.add("hidden");
 }
+
+
+var dogSelector = document.getElementsByClassName("dogContainer");
+dogSelector.addEventListener("click", handleClick);
+function handleClick(event) {
+  if (event.target.className){
+    firstPlayer.setAttribute.event.target.className
+    secondPlayer.setAttribute.event.target.className
+  }
+  }

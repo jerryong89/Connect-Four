@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,12 @@
   <link rel="stylesheet" href="styles.css">
   <title>Connect Four</title>
 </head>
+
 <body class="background">
   <h1><span id="player-turn-header"></span>'s Turn</h1>
 
+
+<body class="background">
   <div class="overall-container">
 
     <section id="player-one-box" class="player-box">
@@ -87,17 +91,19 @@
   </div>
 
   <div id="config-modal">
+
     <div id="config-content">
       <h1>Connect Four - Game Setup</h1>
       <form id="config-form">
         <label for="time-input">Time Limit Per Round (seconds): </label>
         <input id="time-input" type="number" name="time-input" min="1" max="216000"
-          placeholder="Enter a value from 1 to 216,000"> <!--Max 1 hr turn-->
+          placeholder="Enter a value from 1 to 216,000">
+        <!--Max 1 hr turn-->
         <br>
         <label for="rows-input">Rows (6-15): </label>
         <input id="rows-input" type="number" name="rows-input" min="6" max="15"
           placeholder="Enter a value from 6 to 15">
-          <br>
+        <br>
         <label for="columns-input">Columns (7-15): </label>
         <input id="columns-input" type="number" name="columns-input" min="7" max="15"
           placeholder="Enter a value from 7 to 15">
@@ -107,6 +113,21 @@
           <button id="custom-btn" type="button" class="button-glow">Accept Custom Settings</button>
         </section>
       </form>
+      <h1>CHOOSE YOUR CHARACTER!!!</h1>
+      <div class="dogContainer">
+        <div class="dogbeagle"></div>
+        <div class="dogbichon"></div>
+        <div class="dogchihuahua"></div>
+        <div class="dogfrench"></div>
+        <div class="doggolden"></div>
+        <div class="dogmaltese"></div>
+        <div class="dogpomeranian"></div>
+        <div class="dogpoodle"></div>
+        <div class="dogpug"></div>
+        <div class="dogshibainu"></div>
+        <div class="dogshihtzu"></div>
+        <div class="dogsnhauzer"></div>
+      </div>
     </div>
   </div>
 
@@ -119,4 +140,5 @@
 
   <script src="main.js"></script>
 </body>
+
 </html>
