@@ -368,13 +368,15 @@ for (let x = 0; x < dogCharacters2.length; x++) {
     dogCharacters2[x].classList.remove("dog-hover");
   });
   dogCharacters2[x].addEventListener('click', function (event) {
-    dogCharacters2[x].classList.add("character-glow");
-    currentDog = event.target.classList[0];
-    characterButton.classList.remove("invisible");
-    characterButton2.classList.remove("invisible");
-    for (let y = 0; y < dogCharacters.length; y++) {
-      if (dogCharacters2[y] !== event.target) {
-        dogCharacters2[y].classList.remove("character-glow");
+    if (event.target.classList[0] !== firstPlayer.color) {
+      dogCharacters2[x].classList.add("character-glow");
+      currentDog = event.target.classList[0];
+      characterButton.classList.remove("invisible");
+      characterButton2.classList.remove("invisible");
+      for (let y = 0; y < dogCharacters.length; y++) {
+        if (dogCharacters2[y] !== event.target) {
+          dogCharacters2[y].classList.remove("character-glow");
+        }
       }
     }
   });
