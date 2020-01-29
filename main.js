@@ -21,10 +21,13 @@ let secondPlayer = {
   color: "black"
 };
 let currentPlayer = firstPlayer;
-
+document.getElementById("player-one-box").classList.add("column-glow");
 document.getElementById("reset-btn").addEventListener("click", resetBoard);
 
+
+
 // End variable declarations ______________________________________________________
+
 
 // Set Up Game functionality ______________________________________________________
 function setUpGame() {
@@ -64,14 +67,26 @@ function setUpGame() {
   }
 
   topRowEls = document.getElementsByClassName("row-" + (numRows - 1) ); // create list of top row of elements
-  for (i = 0; i < topRowEls.length; i++) {
-    //topRowEls[i].addEventListener("click", dropPiece); //add a listener to each slot in the top row
+  for(i=0; i<topRowEls.length; i++) {
+    topRowEls[i].addEventListener("click", dropPiece); //add a listener to each slot in the top row
+    topRowEls[i].addEventListener("mouseenter", mouseenterColumn); //adds column selector glow
+    topRowEls[i].addEventListener("mouseleave", mouseleaveColumn); //removes column selector glow
   }
 
   console.log("gameColumns Array: ", gameColumns);
   configModalEl.classList.add("hidden");
 }
 //End Set Up Game functionality
+
+// Select column styling ______________________________________________________
+function mouseenterColumn(event) {
+  event.target.parentElement.classList.add("column-glow");
+}
+function mouseleaveColumn(event) {
+  event.target.parentElement.classList.remove("column-glow");
+}
+// End select column styling ______________________________________________________
+
 
 
 // Drop piece functionality ______________________________________________________
@@ -103,8 +118,12 @@ function dropPiece() {
       endGame(false);
     } else if (currentPlayer === firstPlayer) {
       currentPlayer = secondPlayer;
+      document.getElementById("player-two-box").classList.add("column-glow");
+      document.getElementById("player-one-box").classList.remove("column-glow");
     } else {
       currentPlayer = firstPlayer;
+      document.getElementById("player-two-box").classList.remove("column-glow");
+      document.getElementById("player-one-box").classList.add("column-glow");
     }
   } else {
     console.log(`${currentPlayer.name} WINS!`);
