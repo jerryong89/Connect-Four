@@ -1,5 +1,5 @@
 // Variable declarations ______________________________________________________
-let configModalEl = document.getElementById("config-modal");
+const configModalEl = document.getElementById("config-modal");
 let numRows = 6; //default
 let numColumns = 7; //default
 let roundTimeoutSecs = null; //default (no limit)
@@ -7,9 +7,9 @@ document.getElementById("classic-btn").addEventListener("click", setUpGame);
 document.getElementById("custom-btn").addEventListener("click", setUpGame);
 
 let gameColumns = [];
-
 let currentPieceX;
 let currentPieceY;
+let currentRoundTimeout = null;
 
 let firstPlayer = {
   name: "Player 1",
@@ -20,21 +20,24 @@ let secondPlayer = {
   color: "black"
 };
 let currentPlayer = firstPlayer;
+const playerTurnHeaderEl = document.getElementById("player-turn-header");
+playerTurnHeaderEl.innerText = currentPlayer.name;
+
 document.getElementById("player-one-box").classList.add("column-glow");
 document.getElementById("reset-btn").addEventListener("click", resetBoard);
-
-
-
 // End variable declarations ______________________________________________________
-
 
 // Set Up Game functionality ______________________________________________________
 function setUpGame() {
   if(event.target.getAttribute("id") === "custom-btn"){
-    numRows = document.getElementById("rows-input").value;
-    numColumns = document.getElementById("columns-input").value;
+    roundTimeoutSecs = document.getElementById("time-input").value;
+    if (document.getElementById("rows-input").value){ //if an input exists (not blank)
+      numRows = document.getElementById("rows-input").value;
+    }
+    if (document.getElementById("columns-input").value) {
+      numColumns = document.getElementById("columns-input").value;
+    }
   }
-  roundTimeoutSecs = document.getElementById("time-input");
   let gameContainerEl = document.getElementById("game-container");
   while(gameContainerEl.firstChild) {
     gameContainerEl.removeChild(gameContainerEl.firstChild);
@@ -59,9 +62,6 @@ function setUpGame() {
       gameColumns[i][k].setAttribute("column", i);
       gameColumns[i][k].setAttribute("row", k);
     }
-    /* gameColumns[i].addEventListener("click", dropPiece);
-    gameColumns[i].addEventListener("mouseenter", mouseenterColumn);
-    gameColumns[i].addEventListener("mouseleave", mouseleaveColumn); */
   }
 
   let columnToClick;
@@ -75,6 +75,9 @@ function setUpGame() {
 
   console.log("gameColumns Array: ", gameColumns);
   configModalEl.classList.add("hidden");
+  if(roundTimeoutSecs !== null) {
+    currentRoundTimeout = beginRoundInterval();
+  }
 }
 //End Set Up Game functionality
 
@@ -85,13 +88,33 @@ function mouseenterColumn(event) {
 function mouseleaveColumn(event) {
   event.target.classList.remove("column-glow");
 }
-// End select column styling ______________________________________________________
+// End select column styling _____________________________________________________
 
+// Player round timeout functionality ____________________________________________
+function beginRoundInterval() {
+  return setInterval(function () {
+    togglePlayerTurn();
+  }, roundTimeoutSecs * 1000)
+}
+// End player round timeout function _____________________________________________
 
+function togglePlayerTurn() {
+  if (currentPlayer === firstPlayer) {
+    currentPlayer = secondPlayer;
+    document.getElementById("player-two-box").classList.add("column-glow");
+    document.getElementById("player-one-box").classList.remove("column-glow");
+  } else {
+    currentPlayer = firstPlayer;
+    document.getElementById("player-two-box").classList.remove("column-glow");
+    document.getElementById("player-one-box").classList.add("column-glow");
+  }
+  playerTurnHeaderEl.innerText = currentPlayer.name;
+}
 
 // Drop piece functionality ______________________________________________________
-
 function dropPiece() {
+  window.clearTimeout(currentRoundTimeout);
+  currentRoundTimeout = beginRoundInterval();
   let clickedEl = event.target;
   let columnToDropIn = gameColumns[clickedEl.getAttribute("column")];
   let gameBoardFull = false;
@@ -116,36 +139,21 @@ function dropPiece() {
     console.log("Win check returned false");
     if(gameBoardFull) {
       endGame(false);
-    } else if (currentPlayer === firstPlayer) {
-      currentPlayer = secondPlayer;
-      document.getElementById("player-two-box").classList.add("column-glow");
-      document.getElementById("player-one-box").classList.remove("column-glow");
     } else {
-      currentPlayer = firstPlayer;
-      document.getElementById("player-two-box").classList.remove("column-glow");
-      document.getElementById("player-one-box").classList.add("column-glow");
+      togglePlayerTurn();
     }
   } else {
     console.log(`${currentPlayer.name} WINS!`);
     endGame(true);
   }
 
-  //incomplete
-  /* if(roundTimeoutSecs !== null) { //if player has set a timer
-    setTimeout(function(){
-              if (currentPlayer === firstPlayer) {
-                currentPlayer = secondPlayer;
-              } else {
-                currentPlayer = firstPlayer;
-              } }, roundTimeoutSecs * 1000)
-  }*/
 }
 
 // End drop piece functionality ______________________________________________________
 
 // Check for win functionality _______________________________________________________
 
-let directionsArray = [checkNE, checkE, checkSE, checkS, checkSW, checkW, checkNW];
+//let directionsArray = [checkNE, checkE, checkSE, checkS, checkSW, checkW, checkNW];
 
 // The win checks for every direction around the current piece that was added
 
@@ -292,6 +300,7 @@ function resetBoard() {
   currentPlayer = firstPlayer;
   numRows = 6;
   numColumns = 7;
+  currentRoundTimeout = null;
   configModalEl.classList.remove("hidden");
   document.getElementById("win-modal").classList.add("hidden");
 }
