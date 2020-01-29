@@ -18,13 +18,15 @@ let firstPlayer = {
   name: "Player 1",
   color: "red",
   wins: 0,
-  winCounterID: "player-one-win-ct"
+  winCounterID: "player-one-win-ct",
+  timeCounterID: "player-one-time"
 };
 let secondPlayer = {
   name: "Player 2",
   color: "black",
   wins: 0,
-  winCounterID: "player-two-win-ct"
+  winCounterID: "player-two-win-ct",
+  timeCounterID: "player-two-time"
 };
 let currentPlayer = firstPlayer;
 const playerTurnHeaderEl = document.getElementById("player-turn-header");
@@ -128,6 +130,15 @@ function beginRoundInterval() {
     return setInterval(function () {
       togglePlayerTurn();
       }, roundTimeoutSecs * 1000)
+  }
+}
+function beginCountdownInterval() {
+  let timerEl = document.getElementById(currentPlayer.timeCounterID).innerText
+  if (roundTimeoutSecs !== null) {
+    timerEl.innerText = roundTimeoutSecs;
+    return setInterval(function () {
+      timerEl.innerText = parseInt(timerEl.innerText) - 1;
+    }, 1000)
   }
 }
 // End player round timeout function _____________________________________________
