@@ -1,5 +1,8 @@
 // Variable declarations ______________________________________________________
 const configModalEl = document.getElementById("config-modal");
+const timeInputEl = document.getElementById("time-input");
+const numRowsInputEl = document.getElementById("rows-input");
+const numColumnsInputEl = document.getElementById("columns-input");
 let numRows = 6; //default
 let numColumns = 7; //default
 let roundTimeoutSecs = null; //default (no limit)
@@ -9,15 +12,19 @@ document.getElementById("custom-btn").addEventListener("click", setUpGame);
 let gameColumns = [];
 let currentPieceX;
 let currentPieceY;
-let currentRoundTimeout = null;
+let currentRoundTimeout;
 
 let firstPlayer = {
   name: "Player 1",
-  color: "red"
+  color: "red",
+  wins: 0,
+  winCounterID: "player-one-win-ct"
 };
 let secondPlayer = {
   name: "Player 2",
-  color: "black"
+  color: "black",
+  wins: 0,
+  winCounterID: "player-two-win-ct"
 };
 let currentPlayer = firstPlayer;
 const playerTurnHeaderEl = document.getElementById("player-turn-header");
@@ -30,12 +37,8 @@ document.getElementById("reset-btn").addEventListener("click", resetBoard);
 // Set Up Game functionality ______________________________________________________
 function setUpGame() {
   if(event.target.getAttribute("id") === "custom-btn"){
-    roundTimeoutSecs = document.getElementById("time-input").value;
-    if (document.getElementById("rows-input").value){ //if an input exists (not blank)
-      numRows = document.getElementById("rows-input").value;
-    }
-    if (document.getElementById("columns-input").value) {
-      numColumns = document.getElementById("columns-input").value;
+    if(!validateAndSetInputs()){ //sets values and cancels game setup if inputs are invalid
+      return;
     }
   }
   let gameContainerEl = document.getElementById("game-container");
@@ -79,6 +82,35 @@ function setUpGame() {
     currentRoundTimeout = beginRoundInterval();
   }
 }
+
+//returns false if any input is not valid; returns true and sets them all if all are valid
+function validateAndSetInputs() {
+  let minTimeInput = parseInt( timeInputEl.getAttribute("min") );
+  let maxTimeInput = parseInt( timeInputEl.getAttribute("max") );
+  let minRowsInput = parseInt( numRowsInputEl.getAttribute("min") );
+  let maxRowsInput = parseInt( numRowsInputEl.getAttribute("max") );
+  let minColumnsInput = parseInt( numColumnsInputEl.getAttribute("min") );
+  let maxColumnsInput = parseInt( numColumnsInputEl.getAttribute("max") );
+  let currentTimeInput = parseInt(timeInputEl.value);
+  let currentRowsInput = parseInt(numRowsInputEl.value);
+  let currentColumnsInput = parseInt(numColumnsInputEl.value);
+  console.log(minTimeInput, maxTimeInput, minRowsInput, maxRowsInput, minColumnsInput, maxColumnsInput);
+  console.log(currentTimeInput, currentRowsInput, currentColumnsInput);
+  if (currentTimeInput >= minTimeInput && currentTimeInput <= maxTimeInput) {
+    console.log("Time is valid");
+    if (currentRowsInput >= minRowsInput && currentRowsInput <= maxRowsInput) {
+      console.log("Rows are valid");
+      if (currentColumnsInput >= minColumnsInput && currentColumnsInput <= maxColumnsInput) {
+        console.log("Columns are valid");
+        numColumns = currentColumnsInput;
+      } else {return false;}
+      numRows = currentRowsInput;
+    } else {return false;}
+    roundTimeoutSecs = currentTimeInput;
+  } else {return false;}
+  console.log("validateandSetInputs() is returning", true);
+  return true;
+}
 //End Set Up Game functionality
 
 // Select column styling ______________________________________________________
@@ -92,9 +124,11 @@ function mouseleaveColumn(event) {
 
 // Player round timeout functionality ____________________________________________
 function beginRoundInterval() {
-  return setInterval(function () {
-    togglePlayerTurn();
-  }, roundTimeoutSecs * 1000)
+  if (roundTimeoutSecs !== null) {
+    return setInterval(function () {
+      togglePlayerTurn();
+      }, roundTimeoutSecs * 1000)
+  }
 }
 // End player round timeout function _____________________________________________
 
@@ -113,7 +147,7 @@ function togglePlayerTurn() {
 
 // Drop piece functionality ______________________________________________________
 function dropPiece() {
-  window.clearTimeout(currentRoundTimeout);
+  window.clearInterval(currentRoundTimeout);
   currentRoundTimeout = beginRoundInterval();
   let clickedEl = event.target;
   let columnToDropIn = gameColumns[clickedEl.getAttribute("column")];
@@ -276,6 +310,8 @@ function isBoardFull() {
 
 //displays win modal and modifies the text based upon whether the win condition was met
 function endGame(winCondition) {
+  currentPlayer.wins++;
+  document.getElementById(currentPlayer.winCounterID).innerText = currentPlayer.wins;
   let winModal = document.getElementById("win-modal");
   let modalMessage = document.getElementById("message");
   modalMessage.setAttribute('style', 'white-space: pre;'); //allows use of carriage return \r\n
@@ -296,11 +332,13 @@ function resetBoard() {
       gameColumns[tiles][inside].classList.add("white");
     }
   }
+  // set global variables back to default
   gameColumns = [];
   currentPlayer = firstPlayer;
   numRows = 6;
   numColumns = 7;
-  currentRoundTimeout = null;
+  roundTimeoutSecs = null;
+  clearInterval(currentRoundTimeout);
   configModalEl.classList.remove("hidden");
   document.getElementById("win-modal").classList.add("hidden");
 }
