@@ -23,6 +23,7 @@ let secondPlayer = {
   color: "black"
 };
 let currentPlayer = firstPlayer;
+document.getElementById("player-one-box").classList.add("column-glow");
 
 let topRowEls = document.getElementsByClassName("row-5"); // create list of top row of elements
 for(i=0; i<topRowEls.length; i++) {
@@ -75,8 +76,12 @@ function dropPiece() {
       endGame(false);
     } else if (currentPlayer === firstPlayer) {
       currentPlayer = secondPlayer;
+      document.getElementById("player-two-box").classList.add("column-glow");
+      document.getElementById("player-one-box").classList.remove("column-glow");
     } else {
       currentPlayer = firstPlayer;
+      document.getElementById("player-two-box").classList.remove("column-glow");
+      document.getElementById("player-one-box").classList.add("column-glow");
     }
   } else {
     console.log(`${currentPlayer.name} WINS!`);
