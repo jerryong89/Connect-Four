@@ -125,6 +125,7 @@ function dropPiece() {
     if(columnToDropIn[i].classList[2] === "white") {
       columnToDropIn[i].classList.remove("white");
       columnToDropIn[i].classList.add(currentPlayer.color);
+      metal.play();
       currentPieceX = parseInt(columnToDropIn[i].getAttribute("column") , 10);
       currentPieceY = parseInt(columnToDropIn[i].getAttribute("row"), 10);
       console.log(currentPlayer.name, "dropped a" , currentPlayer.color, "token at", currentPieceX, currentPieceY);
@@ -324,6 +325,7 @@ let characterModal = document.getElementById("character-modal");
 let characterButton2 = document.getElementById("character-two-btn");
 let characterModal2 = document.getElementById("character-modal-two");
 let currentDog;
+let metal = document.getElementById("metal");
 
 for (let i = 0; i < dogCharacters.length; i++) {
   dogCharacters[i].addEventListener('mouseenter', function() {
