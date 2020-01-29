@@ -85,6 +85,30 @@
 
   </div>
 
+  <div id="config-modal">
+    <div id="config-content">
+      <h1>Connect Four - Game Setup</h1>
+      <form id="config-form">
+        <label for="time-input">Time Limit Per Round (seconds): </label>
+        <input id="time-input" type="number" name="time-input" min="1" max="216000"
+          placeholder="Enter a value from 1 to 216,000"> <!--Max 1 hr turn-->
+        <br>
+        <label for="rows-input">Rows (6-15): </label>
+        <input id="rows-input" type="number" name="rows-input" min="6" max="15"
+          placeholder="Enter a value from 6 to 15">
+          <br>
+        <label for="columns-input">Columns (7-15): </label>
+        <input id="columns-input" type="number" name="columns-input" min="7" max="15"
+          placeholder="Enter a value from 7 to 15">
+        <br>
+        <section id="config-buttons">
+          <button id="classic-btn" type="button" class="button-glow">Use Classic Settings</button>
+          <button id="custom-btn" type="button" class="button-glow">Accept Custom Settings</button>
+        </section>
+      </form>
+    </div>
+  </div>
+
   <div id="win-modal" class="hidden">
     <div id="modal-content">
       <div id="message">You Win!</div>
