@@ -1,6 +1,5 @@
 // Variable declarations ______________________________________________________
 let configModalEl = document.getElementById("config-modal");
-let topRowEls;
 let numRows = 6; //default
 let numColumns = 7; //default
 let roundTimeoutSecs = null; //default (no limit)
@@ -31,30 +30,26 @@ document.getElementById("reset-btn").addEventListener("click", resetBoard);
 
 // Set Up Game functionality ______________________________________________________
 function setUpGame() {
-  if(event.target.getAttribute("id") === "classic-btn"){
-    // proceed to for loop below
-  }else {
+  if(event.target.getAttribute("id") === "custom-btn"){
     numRows = document.getElementById("rows-input").value;
     numColumns = document.getElementById("columns-input").value;
-    roundTimeoutSecs = document.getElementById("time-input");
-    let gameContainerEl = document.getElementById("game-container");
-    while(gameContainerEl.firstChild) {
-      gameContainerEl.removeChild(gameContainerEl.firstChild);
+  }
+  roundTimeoutSecs = document.getElementById("time-input");
+  let gameContainerEl = document.getElementById("game-container");
+  while(gameContainerEl.firstChild) {
+    gameContainerEl.removeChild(gameContainerEl.firstChild);
+  }
+  let columnToAppend;
+  let slotToAppend;
+  for(let i=0; i < numColumns; i++) {
+    columnToAppend = document.createElement("section");
+    columnToAppend.setAttribute("id","column-" + i);
+    for(let k=0; k < numRows; k++) {
+      slotToAppend = document.createElement("div");
+      slotToAppend.className += "column-" +i+ " row-" +k+ " white";
+      columnToAppend.appendChild(slotToAppend);
     }
-    let columnToAppend;
-    let slotToAppend;
-    for(let i=0; i < numColumns; i++) {
-      columnToAppend = document.createElement("section");
-      columnToAppend.setAttribute("id","column-" + i);
-      for(let k=0; k < numRows; k++) {
-        slotToAppend = document.createElement("div");
-        slotToAppend.className += "column-" +i+ " row-" +k+ " white";
-        columnToAppend.appendChild(slotToAppend);
-      }
-      columnToAppend.addEventListener("click", dropPiece);
-      gameContainerEl.appendChild(columnToAppend);
-    }
-
+    gameContainerEl.appendChild(columnToAppend);
   }
 
   for (let i = 0; i < document.querySelectorAll("#game-container > section").length; i++) {
@@ -64,13 +59,18 @@ function setUpGame() {
       gameColumns[i][k].setAttribute("column", i);
       gameColumns[i][k].setAttribute("row", k);
     }
+    /* gameColumns[i].addEventListener("click", dropPiece);
+    gameColumns[i].addEventListener("mouseenter", mouseenterColumn);
+    gameColumns[i].addEventListener("mouseleave", mouseleaveColumn); */
   }
 
-  topRowEls = document.getElementsByClassName("row-" + (numRows - 1) ); // create list of top row of elements
-  for(i=0; i<topRowEls.length; i++) {
-    topRowEls[i].addEventListener("click", dropPiece); //add a listener to each slot in the top row
-    topRowEls[i].addEventListener("mouseenter", mouseenterColumn); //adds column selector glow
-    topRowEls[i].addEventListener("mouseleave", mouseleaveColumn); //removes column selector glow
+  let columnToClick;
+  for(let i=0; i<gameColumns.length; i++){
+    columnToClick = document.getElementById("column-" + i);
+    columnToClick.addEventListener("click", dropPiece);
+    columnToClick.addEventListener("mouseenter", mouseenterColumn);
+    columnToClick.addEventListener("mouseleave", mouseleaveColumn);
+    columnToClick.setAttribute("column", i);
   }
 
   console.log("gameColumns Array: ", gameColumns);
@@ -80,10 +80,10 @@ function setUpGame() {
 
 // Select column styling ______________________________________________________
 function mouseenterColumn(event) {
-  event.target.parentElement.classList.add("column-glow");
+  event.target.classList.add("column-glow");
 }
 function mouseleaveColumn(event) {
-  event.target.parentElement.classList.remove("column-glow");
+  event.target.classList.remove("column-glow");
 }
 // End select column styling ______________________________________________________
 
@@ -137,8 +137,8 @@ function dropPiece() {
                 currentPlayer = secondPlayer;
               } else {
                 currentPlayer = firstPlayer;
-              } }, roundTimeoutSecs * 1000) */
-  }
+              } }, roundTimeoutSecs * 1000)
+  }*/
 }
 
 // End drop piece functionality ______________________________________________________
@@ -152,7 +152,7 @@ let directionsArray = [checkNE, checkE, checkSE, checkS, checkSW, checkW, checkN
 function checkNE() {
   let i;
   for (i = 1; i < 4; i++) {
-    if (currentPieceX + i < 0 || currentPieceX + i > 6 || currentPieceY + i < 0 || currentPieceY + i > 5) {
+    if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
       break;
     }
     let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i]; // ***Need to make sure we do not refer to an invalid array index***
@@ -166,7 +166,7 @@ function checkNE() {
 function checkE() {
   let i;
   for (i = 1; i < 4; i++) {
-    if (currentPieceX + i < 0 || currentPieceX + i > 6) {
+    if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1) {
       break;
     }
     let currentPiece = gameColumns[currentPieceX + i][currentPieceY];
@@ -180,7 +180,7 @@ function checkE() {
 function checkSE() {
   let i;
   for (i = 1; i < 4; i++) {
-    if (currentPieceX + i < 0 || currentPieceX + i > 6 || currentPieceY - i < 0 || currentPieceY - i > 5) {
+    if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
       break;
     }
     let currentPiece = gameColumns[currentPieceX + i][currentPieceY - i];
@@ -194,7 +194,7 @@ function checkSE() {
 function checkS() {
   let i;
   for (i = 1; i < 4; i++) {
-    if (currentPieceY - i < 0 || currentPieceY - i > 5) {
+    if (currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
       break;
     }
     let currentPiece = gameColumns[currentPieceX][currentPieceY - i];
@@ -208,7 +208,7 @@ function checkS() {
 function checkSW() {
   let i;
   for (i = 1; i < 4; i++) {
-    if (currentPieceX - i < 0 || currentPieceX - i > 6 || currentPieceY - i < 0 || currentPieceY - i > 5) {
+    if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
       break;
     }
     let currentPiece = gameColumns[currentPieceX - i][currentPieceY - i];
@@ -222,7 +222,7 @@ function checkSW() {
 function checkW() {
   let i;
   for (i = 1; i < 4; i++) {
-    if (currentPieceX - i < 0 || currentPieceX - i > 6) {
+    if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1) {
       break;
     }
     let currentPiece = gameColumns[currentPieceX - i][currentPieceY];
@@ -236,7 +236,7 @@ function checkW() {
 function checkNW() {
   let i;
   for (i = 1; i < 4; i++) {
-    if (currentPieceX - i < 0 || currentPieceX - i > 6 || currentPieceY + i < 0 || currentPieceY + i > 5) {
+    if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
       break;
     }
     let currentPiece = gameColumns[currentPieceX - i][currentPieceY + i];
@@ -258,8 +258,8 @@ function checkWin() {
 }
 
 function isBoardFull() {
-  for (let i = 0; i < topRowEls.length; i++) {
-    if (topRowEls[i].classList[2] === "white") { //if one top row element is white, game is not full yet
+  for (let i = 0; i < gameColumns[0].length; i++) {
+    if (gameColumns[i][numRows - 1].classList[2] === "white") { //if one top row element is white, game is not full yet
       return false;
     }
   }
@@ -288,6 +288,10 @@ function resetBoard() {
       gameColumns[tiles][inside].classList.add("white");
     }
   }
+  gameColumns = [];
   currentPlayer = firstPlayer;
+  numRows = 6;
+  numColumns = 7;
+  configModalEl.classList.remove("hidden");
   document.getElementById("win-modal").classList.add("hidden");
 }
