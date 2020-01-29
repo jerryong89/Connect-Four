@@ -6,6 +6,7 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .player-box {
@@ -220,104 +221,206 @@ button:hover {
   100% { box-shadow: 0 0 20px 10px lime; }
 }
 
-.column-glow {
-  animation: glowing-column 3000ms infinite;
+.character-glow {
+  animation: glowing-character 3000ms infinite;
 }
 
-.hidden {
-  display: none;
+@keyframes glowing-character {
+  0% { box-shadow: 0 0 20px 10px lime; }
+  40% { box-shadow: 0 0 20px 10px red; }
+  60% { box-shadow: 0 0 20px 10px red; }
+  100% { box-shadow: 0 0 20px 10px lime; }
+}
+
+
+.column-glow {
+  animation: glowing-column 3000ms infinite;
 }
 
 #config-modal.hidden {
   display: none;
 }
 
-.dogContainer{
+#character-modal {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to right, #f78c7a, #f88899, #ec8ab6, #d592cf, #b69ce0, #9fa8ee, #84b4f6, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #F8F8F8;
+  position: fixed;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#character-modal-two {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to right, #f78c7a, #f88899, #ec8ab6, #d592cf, #b69ce0, #9fa8ee, #84b4f6, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #F8F8F8;
+  position: fixed;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#character-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 2px;
+}
+
+#character-container2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 2px;
+}
+
+#character-btn {
+  margin-top: 20px;
+}
+
+#character-two-btn {
+  margin-top: 20px;
+}
+
+#dogContainer{
   display: flex;
   flex-wrap: wrap;
-  width: 400px;
+  justify-content: center;
+  width: 450px;
+}
+
+#dogContainer > div {
+  border-radius: 50%;
+  background-size: 110%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  margin: 1%;
+}
+
+#dogContainer2{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 450px;
+}
+
+#dogContainer2 > div {
+  border-radius: 50%;
+  background-size: 110%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  margin: 1%;
+}
+
+/* #dogContainer > div:hover {
+  box-shadow: 0 0 20px 10px #5FFBF1;
+} */
+
+.dog-hover {
+  box-shadow: 0 0 20px 10px #5FFBF1;
 }
 
 .dogbeagle{
   background-image: url(images/dogbeagle.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogbichon{
   background-image: url(images/dogbichon.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogchihuahua{
   background-image: url(images/dogchihuahua.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogfrench{
   background-image: url(images/dogfrench.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .doggolden{
   background-image: url(images/doggolden.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogmaltese{
   background-image: url(images/dogmaltese.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogpomeranian{
   background-image: url(images/dogpomeranian.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogpoodle{
   background-image: url(images/dogpoodle.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogpug{
   background-image: url(images/dogpug.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogshibainu{
   background-image: url(images/dogshibainu.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogshihtzu{
   background-image: url(images/dogshihtzu.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
 }
 
 .dogsnhauzer{
   background-image: url(images/dogsnhauzer.png);
-  background-size: contain;
   height: 100px;
   width: 100px;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+#character-modal.hidden {
+  display: none;
+}
+
+#character-modal-two.hidden {
+  display: none;
+}
+
+body.background > h1 {
+  color: white;
 }
