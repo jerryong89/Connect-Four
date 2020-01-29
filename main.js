@@ -301,16 +301,93 @@ function resetBoard() {
   numRows = 6;
   numColumns = 7;
   currentRoundTimeout = null;
-  configModalEl.classList.remove("hidden");
+  characterModal.classList.remove("hidden");
+  // configModalEl.classList.remove("hidden");
   document.getElementById("win-modal").classList.add("hidden");
 }
 
 
-var dogSelector = document.getElementsByClassName("dogContainer");
-dogSelector.addEventListener("click", handleClick);
-function handleClick(event) {
-  if (event.target.className){
-    firstPlayer.setAttribute.event.target.className
-    secondPlayer.setAttribute.event.target.className
+// var dogSelector = document.getElementsByClassName("dogContainer");
+// dogSelector.addEventListener("click", handleClick);
+// function handleClick(event) {
+//   if (event.target.className){
+//     firstPlayer.setAttribute.event.target.className
+//     secondPlayer.setAttribute.event.target.className
+//   }
+// }
+
+let dogCharacters = document.getElementById("dogContainer").children;
+let dogCharacters2 = document.getElementById("dogContainer2").children;
+
+let characterButton = document.getElementById("character-btn");
+let characterModal = document.getElementById("character-modal");
+let characterButton2 = document.getElementById("character-two-btn");
+let characterModal2 = document.getElementById("character-modal-two");
+let currentDog;
+
+for (let i = 0; i < dogCharacters.length; i++) {
+  dogCharacters[i].addEventListener('mouseenter', function() {
+    dogCharacters[i].classList.add("dog-hover");
+  });
+  dogCharacters[i].addEventListener('mouseleave', function () {
+    dogCharacters[i].classList.remove("dog-hover");
+  });
+  dogCharacters[i].addEventListener('click', function (event) {
+    dogCharacters[i].classList.add("character-glow");
+    currentDog = event.target.classList[0];
+    characterButton.classList.remove("invisible");
+    characterButton2.classList.remove("invisible");
+    for (let k = 0; k < dogCharacters.length; k++) {
+      if (dogCharacters[k] !== event.target) {
+        dogCharacters[k].classList.remove("character-glow");
+      }
+    }
+  });
+}
+
+characterButton.addEventListener("click", function() {
+  characterModal.classList.add("hidden");
+  characterButton.classList.add("invisible");
+  characterButton2.classList.add("invisible");
+  characterModal2.classList.remove("hidden");
+  firstPlayer.color = currentDog;
+  currentDog = null;
+  for (let m = 0; m < dogCharacters.length; m++) {
+    dogCharacters[m].classList.remove("character-glow");
   }
+});
+
+// _________________________ TWO
+
+
+for (let x = 0; x < dogCharacters2.length; x++) {
+  dogCharacters2[x].addEventListener('mouseenter', function () {
+    dogCharacters2[x].classList.add("dog-hover");
+  });
+  dogCharacters2[x].addEventListener('mouseleave', function () {
+    dogCharacters2[x].classList.remove("dog-hover");
+  });
+  dogCharacters2[x].addEventListener('click', function (event) {
+    dogCharacters2[x].classList.add("character-glow");
+    currentDog = event.target.classList[0];
+    characterButton.classList.remove("invisible");
+    characterButton2.classList.remove("invisible");
+    for (let y = 0; y < dogCharacters.length; y++) {
+      if (dogCharacters2[y] !== event.target) {
+        dogCharacters2[y].classList.remove("character-glow");
+      }
+    }
+  });
+}
+
+characterButton2.addEventListener("click", function () {
+  characterModal2.classList.add("hidden");
+  characterButton.classList.add("invisible");
+  characterButton2.classList.add("invisible");
+  configModalEl.classList.remove("hidden");
+  secondPlayer.color = currentDog;
+  currentDog = null;
+  for (let n = 0; n < dogCharacters2.length; n++) {
+    dogCharacters2[n].classList.remove("character-glow");
   }
+});
