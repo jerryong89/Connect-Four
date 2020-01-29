@@ -1,15 +1,13 @@
 // Variable declarations ______________________________________________________
-let gameColumns = [];
-for(let i=0; i<7; i++) {
-  gameColumns[i] = document.getElementsByClassName("column-" + i); //create array of columns of elements
-  for(let k=0; k<gameColumns[i].length; k++) {
-    gameColumns[i][k].setAttribute("id", i +"-"+ k);
-    gameColumns[i][k].setAttribute("column", i);
-    gameColumns[i][k].setAttribute("row", k);
-  }
-}
+let configModalEl = document.getElementById("config-modal");
+let topRowEls;
+let numRows = 6; //default
+let numColumns = 7; //default
+let roundTimeoutSecs = null; //default (no limit)
+document.getElementById("classic-btn").addEventListener("click", setUpGame);
+document.getElementById("custom-btn").addEventListener("click", setUpGame);
 
-console.log("gameColumns Array: ",gameColumns);
+let gameColumns = [];
 
 let currentPieceX;
 let currentPieceY;
@@ -24,13 +22,57 @@ let secondPlayer = {
 };
 let currentPlayer = firstPlayer;
 
-let topRowEls = document.getElementsByClassName("row-5"); // create list of top row of elements
-for(i=0; i<topRowEls.length; i++) {
-  topRowEls[i].addEventListener("click", dropPiece); //add a listener to each slot in the top row
-}
 document.getElementById("reset-btn").addEventListener("click", resetBoard);
 
 // End variable declarations ______________________________________________________
+
+// Set Up Game functionality ______________________________________________________
+function setUpGame() {
+  if(event.target.getAttribute("id") === "classic-btn"){
+    // proceed to for loop below
+  }else {
+    numRows = document.getElementById("rows-input").value;
+    numColumns = document.getElementById("columns-input").value;
+    roundTimeoutSecs = document.getElementById("time-input");
+    let gameContainerEl = document.getElementById("game-container");
+    while(gameContainerEl.firstChild) {
+      gameContainerEl.removeChild(gameContainerEl.firstChild);
+    }
+    let columnToAppend;
+    let slotToAppend;
+    for(let i=0; i < numColumns; i++) {
+      columnToAppend = document.createElement("section");
+      columnToAppend.setAttribute("id","column-" + i);
+      for(let k=0; k < numRows; k++) {
+        slotToAppend = document.createElement("div");
+        slotToAppend.className += "column-" +i+ " row-" +k+ " white";
+        columnToAppend.appendChild(slotToAppend);
+      }
+      columnToAppend.addEventListener("click", dropPiece);
+      gameContainerEl.appendChild(columnToAppend);
+    }
+
+  }
+
+  for (let i = 0; i < document.querySelectorAll("#game-container > section").length; i++) {
+    gameColumns[i] = document.getElementsByClassName("column-" + i); //create array of columns of elements
+    for (let k = 0; k < gameColumns[i].length; k++) {
+      gameColumns[i][k].setAttribute("id", i + "-" + k);
+      gameColumns[i][k].setAttribute("column", i);
+      gameColumns[i][k].setAttribute("row", k);
+    }
+  }
+
+  topRowEls = document.getElementsByClassName("row-" + (numRows - 1) ); // create list of top row of elements
+  for (i = 0; i < topRowEls.length; i++) {
+    //topRowEls[i].addEventListener("click", dropPiece); //add a listener to each slot in the top row
+  }
+
+  console.log("gameColumns Array: ", gameColumns);
+  configModalEl.classList.add("hidden");
+}
+//End Set Up Game functionality
+
 
 // Drop piece functionality ______________________________________________________
 
@@ -38,7 +80,7 @@ function dropPiece() {
   let clickedEl = event.target;
   let columnToDropIn = gameColumns[clickedEl.getAttribute("column")];
   let gameBoardFull = false;
-  if(columnToDropIn[5].classList[2] !== "white") { // check if column is full
+  if(columnToDropIn[numRows - 1].classList[2] !== "white") { // check if column is full
     return;
   }
   for(let i=0; i<columnToDropIn.length; i++) { //look for white spaces to drop token
@@ -48,7 +90,7 @@ function dropPiece() {
       currentPieceX = parseInt(columnToDropIn[i].getAttribute("column") , 10);
       currentPieceY = parseInt(columnToDropIn[i].getAttribute("row"), 10);
       console.log(currentPlayer.name, "dropped a" , currentPlayer.color, "token at", currentPieceX, currentPieceY);
-      if (currentPieceY === 5){
+      if (currentPieceY === numRows - 1){
         gameBoardFull = isBoardFull();
         console.log("gameBoardFull:", gameBoardFull);
       }
@@ -67,6 +109,16 @@ function dropPiece() {
   } else {
     console.log(`${currentPlayer.name} WINS!`);
     endGame(true);
+  }
+
+  //incomplete
+  /* if(roundTimeoutSecs !== null) { //if player has set a timer
+    setTimeout(function(){
+              if (currentPlayer === firstPlayer) {
+                currentPlayer = secondPlayer;
+              } else {
+                currentPlayer = firstPlayer;
+              } }, roundTimeoutSecs * 1000) */
   }
 }
 
@@ -205,9 +257,10 @@ function endGame(winCondition) {
   } else {
     modalMessage.innerText = "Bork!" +"\r\n"+ "You tied!";
   }
-  winModal.classList.remove("hidden");
+  setTimeout(function(){ winModal.classList.remove("hidden") }, 2000); //let player view winning board before displaying win modal
 }
 
+//wipes classes from gamepiece slots
 function resetBoard() {
   for (var tiles = 0; tiles < gameColumns.length; tiles++) {
     for (var inside = 0; inside < gameColumns[tiles].length; inside++) {

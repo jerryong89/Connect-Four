@@ -9,7 +9,7 @@
   margin-top: 3%;
 }
 
-#column-0 {
+#game-container > section {
   display: flex;
   flex-direction: column-reverse;
   justify-content: center;
@@ -17,88 +17,7 @@
   width: 14%;
 }
 
-#column-1 {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  width: 14%;
-}
-
-#column-2 {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  width: 14%;
-}
-
-#column-2 {
-  display: flex;
-  flex-direction: column-reverse;
-   justify-content: center;
-  align-items: center;
-  width: 14%;
-}
-#column-3 {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  width: 14%;
-}
-#column-4 {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  width: 14%;
-}
-#column-5 {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  width: 14%;
-}
-#column-6 {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  width: 14%;
-}
-
-.column-0{
-  height: 16%;
-  margin: 4px;
-}
-.column-1{
-  height: 16%;
-  margin: 4px;
-}
-
-.column-2{
-  height: 16%;
-  margin: 4px;
-}
-
-.column-3{
-  height: 16%;
-  margin: 4px;
-}
-
-.column-4{
-  height: 16%;
-  margin: 4px;
-}
-
-.column-5{
-  height: 16%;
-  margin: 4px;
-}
-
-.column-6{
+section > section > div {
   height: 16%;
   margin: 4px;
 }
@@ -109,6 +28,7 @@
   width: 100px;
   border-radius: 50%;
   text-align: center;
+  transition: 0.5s ease-in-out;
 }
 
 .black {
@@ -117,6 +37,7 @@
   width: 100px;
   border-radius: 50%;
   text-align: center;
+  transition: 0.5s ease-in-out;
 }
 
 .white {
@@ -126,12 +47,13 @@
   width: 100px;
   border-radius: 50%;
   text-align: center;
+  transition: 0.5s ease-in-out;
 }
 
 .background{
-background-image: url(images/maxresdefault.jpg);
-background-size: cover;
-background-repeat: no-repeat;
+  background-image: url(images/maxresdefault.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 body{
@@ -141,6 +63,52 @@ body{
   height: 95vh;
   overflow: hidden;
   margin: 0;
+}
+
+#config-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #F8F8F8;
+  position: fixed;
+  overflow: hidden;
+}
+#config-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 30%;
+  height: 100%;
+}
+#config-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#config-form > * {
+  width: 75%;
+  text-align: center;
+}
+#config-form > label {
+  font-size: 20px;
+}
+#config-form > input {
+  width: 60%;
+  margin-bottom: 5%;
+}
+#config-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+#config-buttons > * {
+  width: 40%;
+  font-size: 20px;
 }
 
 #win-modal {
@@ -158,6 +126,7 @@ body{
 #modal-content {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 #message {
@@ -208,5 +177,9 @@ button:hover {
 }
 
 .hidden {
+  display: none;
+}
+
+#config-modal.hidden {
   display: none;
 }
