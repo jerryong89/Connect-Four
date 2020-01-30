@@ -370,10 +370,10 @@ function addCharacterModalEventListeners() {
   characterModalTitle.textContent = `${currentPlayer.name} Select`;
   for (let i = 0; i < dogCharacters.length; i++) {
     dogCharacters[i].addEventListener('mouseenter', function () {
-      dogCharacters[i].classList.add("dog-hover");
+      dogCharacters[i].classList.add("character-hover");
     });
     dogCharacters[i].addEventListener('mouseleave', function () {
-      dogCharacters[i].classList.remove("dog-hover");
+      dogCharacters[i].classList.remove("character-hover");
     });
     dogCharacters[i].addEventListener('click', function (event) {
       if (event.target.classList[0] !== firstPlayer.color && event.target.classList[0] !== secondPlayer.color) {

@@ -13,11 +13,27 @@ body {
   overflow: hidden;
 }
 
+body > h1 {
+  color: white;
+}
+
 .center-xy {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.modal {
+  width: 100%;
+  height: 100vh;
+  background-color: #F8F8F8;
+  position: fixed;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #F8F8F8;
 }
 
 .player-box {
@@ -45,26 +61,17 @@ body {
 .overall-container {
   height: 75%;
   width: 100%;
-  /* justify-content: center;
-  align-items: center;
-  display: flex; */
 }
 
 .flex-container {
-  height: 100%; /* 75% */
-  width: 50%; /* 50% */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+  height: 100%;
+  width: 50%;
 }
 
 #game-container{
   flex-direction: row;
-  height: 100%; /* 85vh */
-  width: 100%; /* 950px */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+  height: 100%;
+  width: 100%;
 }
 
 #game-container > section {
@@ -87,81 +94,47 @@ body {
   background-repeat: no-repeat;
 }
 
-/* .red {
-  background-image: url(images/dogpomeranian.png);
-}
-
-.black {
-  background-image: url(images/dogpug.png);
-} */
-
-.white {
-  background-color: white;
-}
-
 #config-modal {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   flex-direction: column;
-  width: 100%;
-  height: 100vh;
-  background-color: #F8F8F8;
-  position: fixed;
-  overflow: hidden;
 }
+
 #config-content {
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center; */
   flex-direction: column;
   width: 30%;
   height: 100%;
 }
+
 #config-form {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   flex-direction: column;
 }
+
 #config-form > * {
   width: 75%;
   text-align: center;
 }
+
 #config-form > label {
   font-size: 20px;
 }
+
 #config-form > input {
   width: 60%;
   margin-bottom: 5%;
 }
+
 #config-buttons {
   display: flex;
   justify-content: space-between;
 }
+
 #config-buttons > * {
   width: 40%;
   font-size: 20px;
 }
 
 #win-modal {
-  width: 100%;
-  height: 100vh;
   background-image: url(images/puppy-ultimate-form.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-color: #F8F8F8;
-  position: fixed;
-  overflow: hidden;
 }
-
-/* #modal-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 
 #message {
   width: fit-content;
@@ -199,17 +172,6 @@ button:hover {
   cursor: pointer;
 }
 
-/* @keyframes glowing {
-  0% { box-shadow: 0 0 -10px 7px red; }
-  40% { box-shadow: 0 0 20px 7px red; }
-  60% { box-shadow: 0 0 20px 7px red; }
-  100% { box-shadow: 0 0 -10px 7px red; }
-}
-
-.button-glow {
-  animation: glowing 3000ms infinite;
-} */
-
 .column-glow {
   animation: glowing-column 3000ms infinite;
 }
@@ -232,61 +194,20 @@ button:hover {
   100% { box-shadow: 0 0 20px 10px red; }
 }
 
-/* #config-modal.hidden {
-  display: none;
-} */
-
-#character-modal {
-  width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(to right, #f78c7a, #f88899, #ec8ab6, #d592cf, #b69ce0, #9fa8ee, #84b4f6, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-color: #F8F8F8;
-  position: fixed;
-  overflow: hidden;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+.character-hover {
+  box-shadow: 0 0 20px 10px #5FFBF1;
 }
 
-#character-modal-two {
-  width: 100%;
-  height: 100vh;
+#character-modal {
   background-image: linear-gradient(to right, #f78c7a, #f88899, #ec8ab6, #d592cf, #b69ce0, #9fa8ee, #84b4f6, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-color: #F8F8F8;
-  position: fixed;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 #character-container {
   flex-direction: column;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  letter-spacing: 2px;
-}
-
-#character-container2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   letter-spacing: 2px;
 }
 
 #character-btn {
-  margin-top: 20px;
-}
-
-#character-two-btn {
   margin-top: 20px;
 }
 
@@ -307,74 +228,55 @@ button:hover {
   width: 100px;
 }
 
-#dogContainer2{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 450px;
+.white {
+  background-color: white;
 }
 
-#dogContainer2 > div {
-  border-radius: 50%;
-  background-size: 110%;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  margin: 1%;
-}
-
-/* #dogContainer > div:hover {
-  box-shadow: 0 0 20px 10px #5FFBF1;
-} */
-
-.dog-hover {
-  box-shadow: 0 0 20px 10px #5FFBF1;
-}
-
-.dogbeagle{
+.beagle{
   background-image: url(images/dogbeagle.png);
 }
 
-.dogbichon{
+.bichon{
   background-image: url(images/dogbichon.png);
 }
 
-.dogchihuahua{
+.chihuahua{
   background-image: url(images/dogchihuahua.png);
 }
 
-.dogfrench{
+.french{
   background-image: url(images/dogfrench.png);
 }
 
-.doggolden{
+.golden{
   background-image: url(images/doggolden.png);
 }
 
-.dogmaltese{
+.maltese{
   background-image: url(images/dogmaltese.png);
 }
 
-.dogpomeranian{
+.pomeranian{
   background-image: url(images/dogpomeranian.png);
 }
 
-.dogpoodle{
+.poodle{
   background-image: url(images/dogpoodle.png);
 }
 
-.dogpug{
+.pug{
   background-image: url(images/dogpug.png);
 }
 
-.dogshibainu{
+.shibainu{
   background-image: url(images/dogshibainu.png);
 }
 
-.dogshihtzu{
+.shihtzu{
   background-image: url(images/dogshihtzu.png);
 }
 
-.dogschnauzer{
+.schnauzer{
   background-image: url(images/dogschnauzer.png);
 }
 
@@ -384,16 +286,4 @@ button:hover {
 
 .hidden {
   display: none;
-}
-
-/* #character-modal.hidden {
-  display: none;
-} */
-
-#character-modal-two.hidden {
-  display: none;
-}
-
-body > h1 {
-  color: white;
 }
