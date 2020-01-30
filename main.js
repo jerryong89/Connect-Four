@@ -1,4 +1,3 @@
-// Variable declarations ______________________________________________________
 const configModalEl = document.getElementById("config-modal");
 const timeInputEl = document.getElementById("time-input");
 const numRowsInputEl = document.getElementById("rows-input");
@@ -35,9 +34,7 @@ playerTurnHeaderEl.innerText = currentPlayer.name;
 
 document.getElementById("player-one-box").classList.add("column-glow");
 document.getElementById("reset-btn").addEventListener("click", resetBoard);
-// End variable declarations ______________________________________________________
 
-// Set Up Game functionality ______________________________________________________
 function setUpGame() {
   if(event.target.getAttribute("id") === "custom-btn"){
     if(!validateAndSetInputs()){ //sets values and cancels game setup if inputs are invalid
@@ -114,18 +111,14 @@ function validateAndSetInputs() {
   console.log("validateandSetInputs() is returning", true);
   return true;
 }
-//End Set Up Game functionality
 
-// Select column styling ______________________________________________________
 function mouseenterColumn(event) {
   event.target.classList.add("column-glow");
 }
 function mouseleaveColumn(event) {
   event.target.classList.remove("column-glow");
 }
-// End select column styling _____________________________________________________
 
-// Player round timeout functionality ____________________________________________
 function beginRoundInterval() {
   if (roundTimeoutSecs !== null) {
     return setInterval(function () {
@@ -133,16 +126,6 @@ function beginRoundInterval() {
       }, roundTimeoutSecs * 1000)
   }
 }
-function beginCountdownInterval() {
-  let timerEl = document.getElementById(currentPlayer.timeCounterID).innerText
-  if (roundTimeoutSecs !== null) {
-    timerEl.innerText = roundTimeoutSecs;
-    return setInterval(function () {
-      timerEl.innerText = parseInt(timerEl.innerText) - 1;
-    }, 1000)
-  }
-}
-// End player round timeout function _____________________________________________
 
 function togglePlayerTurn() {
   if (currentPlayer === firstPlayer) {
@@ -157,7 +140,6 @@ function togglePlayerTurn() {
   playerTurnHeaderEl.innerText = currentPlayer.name;
 }
 
-// Drop piece functionality ______________________________________________________
 function dropPiece() {
   window.clearInterval(currentRoundTimeout);
   currentRoundTimeout = beginRoundInterval();
@@ -197,11 +179,9 @@ function dropPiece() {
 
 }
 
-// End drop piece functionality ______________________________________________________
 
-// Check for win functionality _______________________________________________________
 
-// The win checks for every direction around the current piece that was added
+// checkWin() checks for every direction around the current piece that was added
 
 // For example, checkDirection(1, 1) checks the "northeast" direction for matching pieces
 
