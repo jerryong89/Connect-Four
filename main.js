@@ -6,6 +6,7 @@ const numColumnsInputEl = document.getElementById("columns-input");
 let numRows = 6; //default
 let numColumns = 7; //default
 let roundTimeoutSecs = null; //default (no limit)
+let metalSound = document.getElementById("metal-sound");
 document.getElementById("classic-btn").addEventListener("click", setUpGame);
 document.getElementById("custom-btn").addEventListener("click", setUpGame);
 
@@ -170,7 +171,8 @@ function dropPiece() {
     if(columnToDropIn[i].classList[2] === "white") {
       columnToDropIn[i].classList.remove("white");
       columnToDropIn[i].classList.add(currentPlayer.color);
-      metal.play();
+      metalSound.currentTime = 0;
+      metalSound.play();
       currentPieceX = parseInt(columnToDropIn[i].getAttribute("column") , 10);
       currentPieceY = parseInt(columnToDropIn[i].getAttribute("row"), 10);
       console.log(currentPlayer.name, "dropped a" , currentPlayer.color, "token at", currentPieceX, currentPieceY);
@@ -347,101 +349,63 @@ function resetBoard() {
   // set global variables back to default
   gameColumns = [];
   currentPlayer = firstPlayer;
+  firstPlayer.color = null;
+  secondPlayer.color = null;
   numRows = 6;
   numColumns = 7;
   roundTimeoutSecs = null;
   clearInterval(currentRoundTimeout);
   currentRoundTimeout = null;
   characterModal.classList.remove("hidden");
-  // configModalEl.classList.remove("hidden");
   document.getElementById("win-modal").classList.add("hidden");
 }
 
-
-// var dogSelector = document.getElementsByClassName("dogContainer");
-// dogSelector.addEventListener("click", handleClick);
-// function handleClick(event) {
-//   if (event.target.className){
-//     firstPlayer.setAttribute.event.target.className
-//     secondPlayer.setAttribute.event.target.className
-//   }
-// }
-
-let dogCharacters = document.getElementById("dogContainer").children;
-let dogCharacters2 = document.getElementById("dogContainer2").children;
-
-let characterButton = document.getElementById("character-btn");
 let characterModal = document.getElementById("character-modal");
-let characterButton2 = document.getElementById("character-two-btn");
-let characterModal2 = document.getElementById("character-modal-two");
+let characterModalTitle = document.getElementById("character-title");
+let characterButton = document.getElementById("character-btn");
+let dogCharacters = document.getElementById("dog-container").children;
 let currentDog;
-let metal = document.getElementById("metal");
 
-for (let i = 0; i < dogCharacters.length; i++) {
-  dogCharacters[i].addEventListener('mouseenter', function() {
-    dogCharacters[i].classList.add("dog-hover");
-  });
-  dogCharacters[i].addEventListener('mouseleave', function () {
-    dogCharacters[i].classList.remove("dog-hover");
-  });
-  dogCharacters[i].addEventListener('click', function (event) {
-    dogCharacters[i].classList.add("character-glow");
-    currentDog = event.target.classList[0];
-    characterButton.classList.remove("invisible");
-    characterButton2.classList.remove("invisible");
-    for (let k = 0; k < dogCharacters.length; k++) {
-      if (dogCharacters[k] !== event.target) {
-        dogCharacters[k].classList.remove("character-glow");
-      }
-    }
-  });
-}
-
-characterButton.addEventListener("click", function() {
-  characterModal.classList.add("hidden");
-  characterButton.classList.add("invisible");
-  characterButton2.classList.add("invisible");
-  characterModal2.classList.remove("hidden");
-  firstPlayer.color = currentDog;
-  currentDog = null;
-  for (let m = 0; m < dogCharacters.length; m++) {
-    dogCharacters[m].classList.remove("character-glow");
-  }
-});
-
-// _________________________ TWO
-
-
-for (let x = 0; x < dogCharacters2.length; x++) {
-  dogCharacters2[x].addEventListener('mouseenter', function () {
-    dogCharacters2[x].classList.add("dog-hover");
-  });
-  dogCharacters2[x].addEventListener('mouseleave', function () {
-    dogCharacters2[x].classList.remove("dog-hover");
-  });
-  dogCharacters2[x].addEventListener('click', function (event) {
-    if (event.target.classList[0] !== firstPlayer.color) {
-      dogCharacters2[x].classList.add("character-glow");
-      currentDog = event.target.classList[0];
-      characterButton.classList.remove("invisible");
-      characterButton2.classList.remove("invisible");
-      for (let y = 0; y < dogCharacters.length; y++) {
-        if (dogCharacters2[y] !== event.target) {
-          dogCharacters2[y].classList.remove("character-glow");
+function addCharacterModalEventListeners() {
+  characterModalTitle.textContent = `${currentPlayer.name} Select`;
+  for (let i = 0; i < dogCharacters.length; i++) {
+    dogCharacters[i].addEventListener('mouseenter', function () {
+      dogCharacters[i].classList.add("dog-hover");
+    });
+    dogCharacters[i].addEventListener('mouseleave', function () {
+      dogCharacters[i].classList.remove("dog-hover");
+    });
+    dogCharacters[i].addEventListener('click', function (event) {
+      if (event.target.classList[0] !== firstPlayer.color && event.target.classList[0] !== secondPlayer.color) {
+        dogCharacters[i].classList.add("character-glow");
+        currentDog = event.target.classList[0];
+        console.log("currentDog", currentDog);
+        characterButton.classList.remove("invisible");
+        for (let k = 0; k < dogCharacters.length; k++) {
+          if (dogCharacters[k] !== event.target) {
+            dogCharacters[k].classList.remove("character-glow");
+          }
         }
       }
+    });
+  }
+
+  characterButton.addEventListener("click", function () {
+    characterButton.classList.add("invisible");
+    currentPlayer.color = currentDog;
+    for (let m = 0; m < dogCharacters.length; m++) {
+      dogCharacters[m].classList.remove("character-glow");
+    }
+    if (currentPlayer === secondPlayer) {
+      currentPlayer = firstPlayer;
+      characterModalTitle.textContent = `Player 1 Select`;
+      characterModal.classList.add("hidden");
+      configModalEl.classList.remove("hidden");
+    } else {
+      currentPlayer = secondPlayer;
+      characterModalTitle.textContent = `Player 2 Select`;
     }
   });
 }
 
-characterButton2.addEventListener("click", function () {
-  characterModal2.classList.add("hidden");
-  characterButton.classList.add("invisible");
-  characterButton2.classList.add("invisible");
-  configModalEl.classList.remove("hidden");
-  secondPlayer.color = currentDog;
-  currentDog = null;
-  for (let n = 0; n < dogCharacters2.length; n++) {
-    dogCharacters2[n].classList.remove("character-glow");
-  }
-});
+addCharacterModalEventListeners();

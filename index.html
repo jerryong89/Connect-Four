@@ -10,9 +10,9 @@
   <title>Connect Four</title>
 </head>
 
-<body class="background">
+<body>
   <h1><span id="player-turn-header"></span>'s Turn</h1>
-  <div class="overall-container">
+  <div class="overall-container center-xy">
 
     <section id="player-one-box" class="player-box">
       <p class="player-name">PLAYER 1</p>
@@ -20,8 +20,8 @@
       <!-- <p>Time | <span id="player-one-time">0</span></p> -->
     </section>
 
-    <div id="flex-container">
-      <section id="game-container">
+    <div class="flex-container center-xy">
+      <section id="game-container" class="center-xy">
         <section id="column-0">
           <div class="column-0 row-0 white"></div>
           <div class="column-0 row-1 white"></div>
@@ -92,16 +92,16 @@
 
 
   <div id="win-modal" class="hidden">
-    <div id="modal-content">
+    <div id="modal-content" class="center-xy">
       <div id="message">You Win!</div>
-      <div id="button-container"><button id="reset-btn" type="button" class="column-glow">Play Again</button></div>
+      <div id="win-button-container" class="center-xy"><button id="reset-btn" type="button" class="column-glow">Play Again</button></div>
     </div>
   </div>
 
-  <div id="character-modal">
-    <div class="overall-container" id="character-container">
-      <h1>Player 1 Select</h1>
-      <div id="dogContainer">
+  <div id="character-modal" class="center-xy">
+    <div class="overall-container center-xy" id="character-container">
+      <h1 id="character-title">Player 1 Select</h1>
+      <div id="dog-container">
         <div class="dogbeagle"></div>
         <div class="dogbichon"></div>
         <div class="dogchihuahua"></div>
@@ -113,13 +113,13 @@
         <div class="dogpug"></div>
         <div class="dogshibainu"></div>
         <div class="dogshihtzu"></div>
-        <div class="dogsnhauzer"></div>
+        <div class="dogschnauzer"></div>
       </div>
       <div><button id="character-btn" type="button" class="column-glow invisible">Select</button></div>
     </div>
   </div>
 
-  <div id="character-modal-two" class="hidden">
+  <!-- <div id="character-modal-two" class="hidden">
     <div class="overall-container" id="character-container2">
       <h1>Player 2 Select</h1>
       <div id="dogContainer2">
@@ -138,13 +138,13 @@
       </div>
       <div><button id="character-two-btn" type="button" class="column-glow invisible">Select</button></div>
     </div>
-  </div>
+  </div> -->
 
-  <div id="config-modal" class="hidden">
+  <div id="config-modal" class="center-xy hidden">
 
-    <div id="config-content">
+    <div id="config-content" class="center-xy">
       <h1>Connect Four - Game Setup</h1>
-      <form id="config-form">
+      <form id="config-form" class="center-xy">
         <label for="time-input">Time Limit Per Round (seconds): </label>
         <input id="time-input" type="number" name="time-input" min="1" max="216000"
           placeholder="Enter a value from 1 to 216,000">
@@ -180,7 +180,7 @@
     </div>
   </div>
 
-  <audio id="metal" src="images/(74) DOOM (2016) OST - Ultraviolence - YouTube - Google Chrome 2020-01-29 11-49-53_Trim.mp3"></audio>
+  <audio id="metal-sound" src="images/metal_riff.mp3"></audio>
 
   <script src="main.js"></script>
 </body>
