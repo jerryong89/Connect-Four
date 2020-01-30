@@ -6,6 +6,7 @@ const numColumnsInputEl = document.getElementById("columns-input");
 let numRows = 6; //default
 let numColumns = 7; //default
 let roundTimeoutSecs = null; //default (no limit)
+let metalSound = document.getElementById("metal-sound");
 document.getElementById("classic-btn").addEventListener("click", setUpGame);
 document.getElementById("custom-btn").addEventListener("click", setUpGame);
 
@@ -170,7 +171,8 @@ function dropPiece() {
     if(columnToDropIn[i].classList[2] === "white") {
       columnToDropIn[i].classList.remove("white");
       columnToDropIn[i].classList.add(currentPlayer.color);
-      metal.play();
+      metalSound.currentTime = 0;
+      metalSound.play();
       currentPieceX = parseInt(columnToDropIn[i].getAttribute("column") , 10);
       currentPieceY = parseInt(columnToDropIn[i].getAttribute("row"), 10);
       console.log(currentPlayer.name, "dropped a" , currentPlayer.color, "token at", currentPieceX, currentPieceY);
@@ -199,117 +201,152 @@ function dropPiece() {
 
 // Check for win functionality _______________________________________________________
 
-//let directionsArray = [checkNE, checkE, checkSE, checkS, checkSW, checkW, checkNW];
-
 // The win checks for every direction around the current piece that was added
 
-function checkNE() {
-  let i;
-  for (i = 1; i < 4; i++) {
-    if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
-      break;
-    }
-    let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i]; // ***Need to make sure we do not refer to an invalid array index***
-    if (currentPiece.classList[2] !== currentPlayer.color) {
-      break;
-    }
-  }
-  return i - 1;
-}
+// checkDirection(1, 1); //NE
+// checkDirection(1, 0); //E
+// checkDirection(1, -1); //SE
+// checkDirection(0, -1); //S
+// checkDirection(-1, -1); //SW
+// checkDirection(-1, 0); //W
+// checkDirection(-1, 1); //NW
 
-function checkE() {
-  let i;
-  for (i = 1; i < 4; i++) {
-    if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1) {
-      break;
-    }
-    let currentPiece = gameColumns[currentPieceX + i][currentPieceY];
-    if (currentPiece.classList[2] !== currentPlayer.color) {
-      break;
-    }
-  }
-  return i - 1;
-}
+// function checkNE() {
+//   let i;
+//   for (i = 1; i < 4; i++) {
+//     if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
+//       break;
+//     }
+//     let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i]; // ***Need to make sure we do not refer to an invalid array index***
+//     if (currentPiece.classList[2] !== currentPlayer.color) {
+//       break;
+//     }
+//   }
+//   return i - 1;
+// }
 
-function checkSE() {
-  let i;
-  for (i = 1; i < 4; i++) {
-    if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
-      break;
-    }
-    let currentPiece = gameColumns[currentPieceX + i][currentPieceY - i];
-    if (currentPiece.classList[2] !== currentPlayer.color) {
-      break;
-    }
-  }
-  return i - 1;
-}
+// function checkE() {
+//   let i;
+//   for (i = 1; i < 4; i++) {
+//     if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1) {
+//       break;
+//     }
+//     let currentPiece = gameColumns[currentPieceX + i][currentPieceY];
+//     if (currentPiece.classList[2] !== currentPlayer.color) {
+//       break;
+//     }
+//   }
+//   return i - 1;
+// }
 
-function checkS() {
-  let i;
-  for (i = 1; i < 4; i++) {
-    if (currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
-      break;
-    }
-    let currentPiece = gameColumns[currentPieceX][currentPieceY - i];
-    if (currentPiece.classList[2] !== currentPlayer.color) {
-      break;
-    }
-  }
-  return i - 1;
-}
+// function checkSE() {
+//   let i;
+//   for (i = 1; i < 4; i++) {
+//     if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
+//       break;
+//     }
+//     let currentPiece = gameColumns[currentPieceX + i][currentPieceY - i];
+//     if (currentPiece.classList[2] !== currentPlayer.color) {
+//       break;
+//     }
+//   }
+//   return i - 1;
+// }
 
-function checkSW() {
-  let i;
-  for (i = 1; i < 4; i++) {
-    if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
-      break;
-    }
-    let currentPiece = gameColumns[currentPieceX - i][currentPieceY - i];
-    if (currentPiece.classList[2] !== currentPlayer.color) {
-      break;
-    }
-  }
-  return i - 1;
-}
+// function checkS() {
+//   let i;
+//   for (i = 1; i < 4; i++) {
+//     if (currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
+//       break;
+//     }
+//     let currentPiece = gameColumns[currentPieceX][currentPieceY - i];
+//     if (currentPiece.classList[2] !== currentPlayer.color) {
+//       break;
+//     }
+//   }
+//   return i - 1;
+// }
 
-function checkW() {
-  let i;
-  for (i = 1; i < 4; i++) {
-    if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1) {
-      break;
-    }
-    let currentPiece = gameColumns[currentPieceX - i][currentPieceY];
-    if (currentPiece.classList[2] !== currentPlayer.color) {
-      break;
-    }
-  }
-  return i - 1;
-}
+// function checkSW() {
+//   let i;
+//   for (i = 1; i < 4; i++) {
+//     if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
+//       break;
+//     }
+//     let currentPiece = gameColumns[currentPieceX - i][currentPieceY - i];
+//     if (currentPiece.classList[2] !== currentPlayer.color) {
+//       break;
+//     }
+//   }
+//   return i - 1;
+// }
 
-function checkNW() {
-  let i;
-  for (i = 1; i < 4; i++) {
-    if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
-      break;
-    }
-    let currentPiece = gameColumns[currentPieceX - i][currentPieceY + i];
-    if (currentPiece === undefined) {
-      break;
-    } else if (currentPiece.classList[2] !== currentPlayer.color) {
-      break;
-    }
-  }
-  return i - 1;
-}
+// function checkW() {
+//   let i;
+//   for (i = 1; i < 4; i++) {
+//     if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1) {
+//       break;
+//     }
+//     let currentPiece = gameColumns[currentPieceX - i][currentPieceY];
+//     if (currentPiece.classList[2] !== currentPlayer.color) {
+//       break;
+//     }
+//   }
+//   return i - 1;
+// }
+
+// function checkNW() {
+//   let i;
+//   for (i = 1; i < 4; i++) {
+//     if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
+//       break;
+//     }
+//     let currentPiece = gameColumns[currentPieceX - i][currentPieceY + i];
+//     if (currentPiece === undefined) {
+//       break;
+//     } else if (currentPiece.classList[2] !== currentPlayer.color) {
+//       break;
+//     }
+//   }
+//   return i - 1;
+// }
 
 // Function that runs all the checks in each direction and returns true at the first instance of a winning case
+// function checkWin() {
+//   if (checkS() + 1 >= 4 || checkNW() + checkSE() + 1 >=4 || checkNE() + checkSW() + 1 >= 4 || checkW() + checkE() + 1 >= 4) {
+//     console.log("You got it");
+//     return true;
+//   }
+// }
+
+function checkDirection(x, y) {
+  let i;
+  for (i = 1; i < 4; i++) {
+    if (currentPieceX + i * x < 0 || currentPieceX + i * x > numColumns - 1 || currentPieceY + i * y < 0 || currentPieceY + i * y > numRows - 1) {
+      break;
+    }
+    let currentPiece = gameColumns[currentPieceX + i * x][currentPieceY + i * y]; // ***Need to make sure we do not refer to an invalid array index***
+    if (currentPiece.classList[2] !== currentPlayer.color) {
+      break;
+    }
+  }
+  return i - 1;
+}
+
 function checkWin() {
-  if (checkS() + 1 >= 4 || checkNW() + checkSE() + 1 >=4 || checkNE() + checkSW() + 1 >= 4 || checkW() + checkE() + 1 >= 4) {
+  if (checkDirection(0, -1) + 1 >= 4 || checkDirection(-1, 1) + checkDirection(1, -1) + 1 >= 4 || checkDirection(1, 1) + checkDirection(-1, -1) + 1 >= 4 || checkDirection(-1, 0) + checkDirection(1, 0) + 1 >= 4) {
     console.log("You got it");
     return true;
   }
 }
+
+// checkDirection(1, 1); //NE
+// checkDirection(1, 0); //E
+// checkDirection(1, -1); //SE
+// checkDirection(0, -1); //S
+// checkDirection(-1, -1); //SW
+// checkDirection(-1, 0); //W
+// checkDirection(-1, 1); //NW
 
 function isBoardFull() {
   for (let i = 0; i < gameColumns[0].length; i++) {
@@ -347,101 +384,63 @@ function resetBoard() {
   // set global variables back to default
   gameColumns = [];
   currentPlayer = firstPlayer;
+  firstPlayer.color = null;
+  secondPlayer.color = null;
   numRows = 6;
   numColumns = 7;
   roundTimeoutSecs = null;
   clearInterval(currentRoundTimeout);
   currentRoundTimeout = null;
   characterModal.classList.remove("hidden");
-  // configModalEl.classList.remove("hidden");
   document.getElementById("win-modal").classList.add("hidden");
 }
 
-
-// var dogSelector = document.getElementsByClassName("dogContainer");
-// dogSelector.addEventListener("click", handleClick);
-// function handleClick(event) {
-//   if (event.target.className){
-//     firstPlayer.setAttribute.event.target.className
-//     secondPlayer.setAttribute.event.target.className
-//   }
-// }
-
-let dogCharacters = document.getElementById("dogContainer").children;
-let dogCharacters2 = document.getElementById("dogContainer2").children;
-
-let characterButton = document.getElementById("character-btn");
 let characterModal = document.getElementById("character-modal");
-let characterButton2 = document.getElementById("character-two-btn");
-let characterModal2 = document.getElementById("character-modal-two");
+let characterModalTitle = document.getElementById("character-title");
+let characterButton = document.getElementById("character-btn");
+let dogCharacters = document.getElementById("dog-container").children;
 let currentDog;
-let metal = document.getElementById("metal");
 
-for (let i = 0; i < dogCharacters.length; i++) {
-  dogCharacters[i].addEventListener('mouseenter', function() {
-    dogCharacters[i].classList.add("dog-hover");
-  });
-  dogCharacters[i].addEventListener('mouseleave', function () {
-    dogCharacters[i].classList.remove("dog-hover");
-  });
-  dogCharacters[i].addEventListener('click', function (event) {
-    dogCharacters[i].classList.add("character-glow");
-    currentDog = event.target.classList[0];
-    characterButton.classList.remove("invisible");
-    characterButton2.classList.remove("invisible");
-    for (let k = 0; k < dogCharacters.length; k++) {
-      if (dogCharacters[k] !== event.target) {
-        dogCharacters[k].classList.remove("character-glow");
-      }
-    }
-  });
-}
-
-characterButton.addEventListener("click", function() {
-  characterModal.classList.add("hidden");
-  characterButton.classList.add("invisible");
-  characterButton2.classList.add("invisible");
-  characterModal2.classList.remove("hidden");
-  firstPlayer.color = currentDog;
-  currentDog = null;
-  for (let m = 0; m < dogCharacters.length; m++) {
-    dogCharacters[m].classList.remove("character-glow");
-  }
-});
-
-// _________________________ TWO
-
-
-for (let x = 0; x < dogCharacters2.length; x++) {
-  dogCharacters2[x].addEventListener('mouseenter', function () {
-    dogCharacters2[x].classList.add("dog-hover");
-  });
-  dogCharacters2[x].addEventListener('mouseleave', function () {
-    dogCharacters2[x].classList.remove("dog-hover");
-  });
-  dogCharacters2[x].addEventListener('click', function (event) {
-    if (event.target.classList[0] !== firstPlayer.color) {
-      dogCharacters2[x].classList.add("character-glow");
-      currentDog = event.target.classList[0];
-      characterButton.classList.remove("invisible");
-      characterButton2.classList.remove("invisible");
-      for (let y = 0; y < dogCharacters.length; y++) {
-        if (dogCharacters2[y] !== event.target) {
-          dogCharacters2[y].classList.remove("character-glow");
+function addCharacterModalEventListeners() {
+  characterModalTitle.textContent = `${currentPlayer.name} Select`;
+  for (let i = 0; i < dogCharacters.length; i++) {
+    dogCharacters[i].addEventListener('mouseenter', function () {
+      dogCharacters[i].classList.add("character-hover");
+    });
+    dogCharacters[i].addEventListener('mouseleave', function () {
+      dogCharacters[i].classList.remove("character-hover");
+    });
+    dogCharacters[i].addEventListener('click', function (event) {
+      if (event.target.classList[0] !== firstPlayer.color && event.target.classList[0] !== secondPlayer.color) {
+        dogCharacters[i].classList.add("character-glow");
+        currentDog = event.target.classList[0];
+        console.log("currentDog", currentDog);
+        characterButton.classList.remove("invisible");
+        for (let k = 0; k < dogCharacters.length; k++) {
+          if (dogCharacters[k] !== event.target) {
+            dogCharacters[k].classList.remove("character-glow");
+          }
         }
       }
+    });
+  }
+
+  characterButton.addEventListener("click", function () {
+    characterButton.classList.add("invisible");
+    currentPlayer.color = currentDog;
+    for (let m = 0; m < dogCharacters.length; m++) {
+      dogCharacters[m].classList.remove("character-glow");
+    }
+    if (currentPlayer === secondPlayer) {
+      currentPlayer = firstPlayer;
+      characterModalTitle.textContent = `Player 1 Select`;
+      characterModal.classList.add("hidden");
+      configModalEl.classList.remove("hidden");
+    } else {
+      currentPlayer = secondPlayer;
+      characterModalTitle.textContent = `Player 2 Select`;
     }
   });
 }
 
-characterButton2.addEventListener("click", function () {
-  characterModal2.classList.add("hidden");
-  characterButton.classList.add("invisible");
-  characterButton2.classList.add("invisible");
-  configModalEl.classList.remove("hidden");
-  secondPlayer.color = currentDog;
-  currentDog = null;
-  for (let n = 0; n < dogCharacters2.length; n++) {
-    dogCharacters2[n].classList.remove("character-glow");
-  }
-});
+addCharacterModalEventListeners();
