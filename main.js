@@ -203,129 +203,16 @@ function dropPiece() {
 
 // The win checks for every direction around the current piece that was added
 
-// checkDirection(1, 1); //NE
-// checkDirection(1, 0); //E
-// checkDirection(1, -1); //SE
-// checkDirection(0, -1); //S
-// checkDirection(-1, -1); //SW
-// checkDirection(-1, 0); //W
-// checkDirection(-1, 1); //NW
-
-// function checkNE() {
-//   let i;
-//   for (i = 1; i < 4; i++) {
-//     if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
-//       break;
-//     }
-//     let currentPiece = gameColumns[currentPieceX + i][currentPieceY + i]; // ***Need to make sure we do not refer to an invalid array index***
-//     if (currentPiece.classList[2] !== currentPlayer.color) {
-//       break;
-//     }
-//   }
-//   return i - 1;
-// }
-
-// function checkE() {
-//   let i;
-//   for (i = 1; i < 4; i++) {
-//     if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1) {
-//       break;
-//     }
-//     let currentPiece = gameColumns[currentPieceX + i][currentPieceY];
-//     if (currentPiece.classList[2] !== currentPlayer.color) {
-//       break;
-//     }
-//   }
-//   return i - 1;
-// }
-
-// function checkSE() {
-//   let i;
-//   for (i = 1; i < 4; i++) {
-//     if (currentPieceX + i < 0 || currentPieceX + i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
-//       break;
-//     }
-//     let currentPiece = gameColumns[currentPieceX + i][currentPieceY - i];
-//     if (currentPiece.classList[2] !== currentPlayer.color) {
-//       break;
-//     }
-//   }
-//   return i - 1;
-// }
-
-// function checkS() {
-//   let i;
-//   for (i = 1; i < 4; i++) {
-//     if (currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
-//       break;
-//     }
-//     let currentPiece = gameColumns[currentPieceX][currentPieceY - i];
-//     if (currentPiece.classList[2] !== currentPlayer.color) {
-//       break;
-//     }
-//   }
-//   return i - 1;
-// }
-
-// function checkSW() {
-//   let i;
-//   for (i = 1; i < 4; i++) {
-//     if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY - i < 0 || currentPieceY - i > numRows - 1) {
-//       break;
-//     }
-//     let currentPiece = gameColumns[currentPieceX - i][currentPieceY - i];
-//     if (currentPiece.classList[2] !== currentPlayer.color) {
-//       break;
-//     }
-//   }
-//   return i - 1;
-// }
-
-// function checkW() {
-//   let i;
-//   for (i = 1; i < 4; i++) {
-//     if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1) {
-//       break;
-//     }
-//     let currentPiece = gameColumns[currentPieceX - i][currentPieceY];
-//     if (currentPiece.classList[2] !== currentPlayer.color) {
-//       break;
-//     }
-//   }
-//   return i - 1;
-// }
-
-// function checkNW() {
-//   let i;
-//   for (i = 1; i < 4; i++) {
-//     if (currentPieceX - i < 0 || currentPieceX - i > numColumns - 1 || currentPieceY + i < 0 || currentPieceY + i > numRows - 1) {
-//       break;
-//     }
-//     let currentPiece = gameColumns[currentPieceX - i][currentPieceY + i];
-//     if (currentPiece === undefined) {
-//       break;
-//     } else if (currentPiece.classList[2] !== currentPlayer.color) {
-//       break;
-//     }
-//   }
-//   return i - 1;
-// }
-
-// Function that runs all the checks in each direction and returns true at the first instance of a winning case
-// function checkWin() {
-//   if (checkS() + 1 >= 4 || checkNW() + checkSE() + 1 >=4 || checkNE() + checkSW() + 1 >= 4 || checkW() + checkE() + 1 >= 4) {
-//     console.log("You got it");
-//     return true;
-//   }
-// }
+// For example, checkDirection(1, 1) checks the "northeast" direction for matching pieces
 
 function checkDirection(x, y) {
   let i;
   for (i = 1; i < 4; i++) {
+    //first check for invalid array indexes
     if (currentPieceX + i * x < 0 || currentPieceX + i * x > numColumns - 1 || currentPieceY + i * y < 0 || currentPieceY + i * y > numRows - 1) {
       break;
     }
-    let currentPiece = gameColumns[currentPieceX + i * x][currentPieceY + i * y]; // ***Need to make sure we do not refer to an invalid array index***
+    let currentPiece = gameColumns[currentPieceX + i * x][currentPieceY + i * y];
     if (currentPiece.classList[2] !== currentPlayer.color) {
       break;
     }
@@ -339,14 +226,6 @@ function checkWin() {
     return true;
   }
 }
-
-// checkDirection(1, 1); //NE
-// checkDirection(1, 0); //E
-// checkDirection(1, -1); //SE
-// checkDirection(0, -1); //S
-// checkDirection(-1, -1); //SW
-// checkDirection(-1, 0); //W
-// checkDirection(-1, 1); //NW
 
 function isBoardFull() {
   for (let i = 0; i < gameColumns[0].length; i++) {
