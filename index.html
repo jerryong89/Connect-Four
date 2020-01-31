@@ -1,71 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <title>Connect Four</title>
 </head>
-<body>
-  <section id="game-container">
-    <section id="column-0">
-      <div class="column-0 row-0"></div>
-      <div class="column-0 row-1"></div>
-      <div class="column-0 row-2"></div>
-      <div class="column-0 row-3"></div>
-      <div class="column-0 row-4"></div>
-      <div class="column-0 row-5"></div>
-    </section>
-    <section id="column-1">
-      <div class="column-1 row-0"></div>
-      <div class="column-1 row-1"></div>
-      <div class="column-1 row-2"></div>
-      <div class="column-1 row-3"></div>
-      <div class="column-1 row-4"></div>
-      <div class="column-1 row-5"></div>
-    </section>
-    <section id="column-2">
-      <div class="column-2 row-0"></div>
-      <div class="column-2 row-1"></div>
-      <div class="column-2 row-2"></div>
-      <div class="column-2 row-3"></div>
-      <div class="column-2 row-4"></div>
-      <div class="column-2 row-5"></div>
-    </section>
-    <section id="column-3">
-      <div class="column-3 row-0"></div>
-      <div class="column-3 row-1"></div>
-      <div class="column-3 row-2"></div>
-      <div class="column-3 row-3"></div>
-      <div class="column-3 row-4"></div>
-      <div class="column-3 row-5"></div>
-    </section>
-    <section id="column-4">
-      <div class="column-4 row-0"></div>
-      <div class="column-4 row-1"></div>
-      <div class="column-4 row-2"></div>
-      <div class="column-4 row-3"></div>
-      <div class="column-4 row-4"></div>
-      <div class="column-4 row-5"></div>
-    </section>
-    <section id="column-5">
-      <div class="column-5 row-0"></div>
-      <div class="column-5 row-1"></div>
-      <div class="column-5 row-2"></div>
-      <div class="column-5 row-3"></div>
-      <div class="column-5 row-4"></div>
-      <div class="column-5 row-5"></div>
-    </section>
-    <section id="column-6">
-      <div class="column-6 row-0"></div>
-      <div class="column-6 row-1"></div>
-      <div class="column-6 row-2"></div>
-      <div class="column-6 row-3"></div>
-      <div class="column-6 row-4"></div>
-      <div class="column-6 row-5"></div>
-    </section>
-  </section>
 
-  <script src="skeleton.js"></script>
+<body>
+  <h1><span id="player-turn-header"></span>'s Turn</h1>
+  <div class="overall-container center-xy">
+
+    <section id="player-one-box" class="player-box">
+      <p class="player-name">PLAYER 1</p>
+      <p id="player-one-wins">Wins | <span id="player-one-win-ct">0</span></p>
+    </section>
+
+    <div class="flex-container center-xy">
+      <section id="game-container" class="center-xy"></section>
+    </div>
+
+    <section id="player-two-box" class="player-box">
+      <p class="player-name">PLAYER 2</p>
+      <p id="player-two-wins">Wins | <span id="player-two-win-ct">0</span></p>
+    </section>
+
+  </div>
+
+  <div id="win-modal" class="hidden modal">
+    <div id="modal-content" class="center-xy">
+      <div id="message">You Win!</div>
+      <div id="win-button-container" class="center-xy"><button id="reset-btn" type="button" class="column-glow">Play Again</button></div>
+    </div>
+  </div>
+
+  <div id="character-modal" class="center-xy modal">
+    <div class="overall-container center-xy" id="character-container">
+      <h1 id="character-title">Player 1 Select</h1>
+      <div id="dog-container">
+        <div class="beagle"></div>
+        <div class="bichon"></div>
+        <div class="chihuahua"></div>
+        <div class="french"></div>
+        <div class="golden"></div>
+        <div class="maltese"></div>
+        <div class="pomeranian"></div>
+        <div class="poodle"></div>
+        <div class="pug"></div>
+        <div class="shibainu"></div>
+        <div class="shihtzu"></div>
+        <div class="schnauzer"></div>
+      </div>
+      <div><button id="character-btn" type="button" class="column-glow invisible">Select</button></div>
+    </div>
+  </div>
+
+  <div id="config-modal" class="center-xy hidden modal">
+    <div id="config-content" class="center-xy">
+      <h1>Connect Four - Game Setup</h1>
+      <form id="config-form" class="center-xy">
+        <label for="time-input">Time Limit Per Round (seconds): </label>
+        <input id="time-input" type="number" name="time-input" min="1" max="216000"
+          placeholder="Enter a value from 1 to 216,000">
+        <!--Max 1 hr turn-->
+        <br>
+        <label for="rows-input">Rows (6-15): </label>
+        <input id="rows-input" type="number" name="rows-input" min="6" max="15" placeholder="Enter a value from 6 to 15">
+        <br>
+        <label for="columns-input">Columns (7-15): </label>
+        <input id="columns-input" type="number" name="columns-input" min="7" max="15"
+          placeholder="Enter a value from 7 to 15">
+        <br>
+        <section id="config-buttons">
+          <button id="classic-btn" type="button" class="column-glow">Use Classic Settings</button>
+          <button id="custom-btn" type="button" class="column-glow">Accept Custom Settings</button>
+        </section>
+      </form>
+    </div>
+  </div>
+
+  <audio id="metal-sound" src="images/metal_riff.mp3"></audio>
+
+  <script src="main.js"></script>
 </body>
 </html>

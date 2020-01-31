@@ -1,0 +1,292 @@
+body {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  background-image: url(images/maxresdefault.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+body > h1 {
+  color: white;
+}
+
+.center-xy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.modal {
+  width: 100%;
+  height: 100vh;
+  background-color: #F8F8F8;
+  position: fixed;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #F8F8F8;
+}
+
+.player-box {
+  height: 30%;
+  width: 15%;
+  font-size: 1.2rem;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  letter-spacing: 2px;
+  text-align: center;
+  align-self: flex-start;
+  color: white;
+  border-radius: 15px;
+  border: white 2px solid;
+  margin: 0 3%;
+}
+
+#player-one-box {
+  background-image: linear-gradient(45deg,#00dbde,#fc00ff);
+}
+
+#player-two-box {
+  background-image: linear-gradient(-45deg,#00dbde,#fc00ff);
+}
+
+.overall-container {
+  height: 75%;
+  width: 100%;
+}
+
+.flex-container {
+  height: 100%;
+  width: 50%;
+}
+
+#game-container{
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+#game-container > section {
+  border-radius: 15px;
+  flex-direction: column-reverse;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  height: 100%;
+}
+
+#game-container > section > div {
+  height: 100%;
+  width: 79.7%;
+  margin: 4px;
+  border-radius: 50%;
+  background-size: 110%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+#config-modal {
+  flex-direction: column;
+}
+
+#config-content {
+  flex-direction: column;
+  width: 30%;
+  height: 100%;
+}
+
+#config-form {
+  flex-direction: column;
+}
+
+#config-form > * {
+  width: 75%;
+  text-align: center;
+}
+
+#config-form > label {
+  font-size: 20px;
+}
+
+#config-form > input {
+  width: 60%;
+  margin-bottom: 5%;
+}
+
+#config-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+#config-buttons > * {
+  width: 40%;
+  font-size: 20px;
+}
+
+#win-modal {
+  background-image: url(images/puppy-ultimate-form.png);
+}
+
+#message {
+  width: fit-content;
+  padding: 20px;
+  color: black;
+  font-size: 2rem;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  letter-spacing: 2px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+  top: 1%;
+  font-size: 4rem;
+}
+
+#win-button-container {
+  width: 100%;
+  position: absolute;
+  bottom: 40%;
+}
+
+button {
+  width: 250px;
+  padding: 20px;
+  background-color: black;
+  border: white;
+  color: white;
+  font-size: 1.6rem;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  letter-spacing: 2px;
+  border-radius: 15px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.column-glow {
+  animation: glowing-column 3000ms infinite;
+}
+
+@keyframes glowing-column {
+  0% { box-shadow: 0 0 20px 10px #D16BA5; }
+  40% { box-shadow: 0 0 20px 10px #86A8E7; }
+  60% { box-shadow: 0 0 20px 10px #5FFBF1; }
+  100% { box-shadow: 0 0 20px 10px lime; }
+}
+
+.character-glow {
+  animation: glowing-character 3000ms infinite;
+}
+
+@keyframes glowing-character {
+  0% { box-shadow: 0 0 20px 10px red; }
+  40% { box-shadow: 0 0 20px 10px lime; }
+  60% { box-shadow: 0 0 20px 10px lime; }
+  100% { box-shadow: 0 0 20px 10px red; }
+}
+
+.character-hover {
+  box-shadow: 0 0 20px 10px #5FFBF1;
+}
+
+#character-modal {
+  background-image: linear-gradient(to right, #f78c7a, #f88899, #ec8ab6, #d592cf, #b69ce0, #9fa8ee, #84b4f6, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+}
+
+#character-container {
+  flex-direction: column;
+  letter-spacing: 2px;
+}
+
+#character-btn {
+  margin-top: 20px;
+}
+
+#dog-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 450px;
+}
+
+#dog-container > div {
+  border-radius: 50%;
+  background-size: 110%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  margin: 1%;
+  height: 100px;
+  width: 100px;
+}
+
+.white {
+  border-radius: 50%;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: white;
+}
+
+.beagle{
+  background-image: url(images/dogbeagle.png);
+}
+
+.bichon{
+  background-image: url(images/dogbichon.png);
+}
+
+.chihuahua{
+  background-image: url(images/dogchihuahua.png);
+}
+
+.french{
+  background-image: url(images/dogfrench.png);
+}
+
+.golden{
+  background-image: url(images/doggolden.png);
+}
+
+.maltese{
+  background-image: url(images/dogmaltese.png);
+}
+
+.pomeranian{
+  background-image: url(images/dogpomeranian.png);
+}
+
+.poodle{
+  background-image: url(images/dogpoodle.png);
+}
+
+.pug{
+  background-image: url(images/dogpug.png);
+}
+
+.shibainu{
+  background-image: url(images/dogshibainu.png);
+}
+
+.shihtzu{
+  background-image: url(images/dogshihtzu.png);
+}
+
+.schnauzer{
+  background-image: url(images/dogschnauzer.png);
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.hidden {
+  display: none;
+}
